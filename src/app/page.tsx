@@ -30,7 +30,7 @@ export default function Home() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
           <TeaLeaf />
-          <span className="text-4xl font-light tracking-wider text-center teaver-heading">HealTea</span>
+          <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
       </header>
@@ -38,19 +38,20 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-6 py-16">
         {/* Hero Section */}
         <section className="mb-20 text-center">
-          <h1 className="text-5xl sm:text-6xl font-light mb-8 tracking-wide teaver-heading">
+          <h1 className="text-5xl sm:text-6xl font-light mb-8 tracking-[0.15em] font-sans">
             お茶と健康の<br />
             <span className="text-[#8b7355]">ブログ</span>
           </h1>
           <p className="text-xl text-[#6b7280] mb-4 teaver-text max-w-3xl mx-auto">
-            お茶の歴史、日本料理・旅館・おもてなし、健康診断、そしてお茶と健康をテーマに発信します。
+            お茶の歴史、日本料理・旅館・おもてなし、健康診断、<br />
+            そしてお茶と健康をテーマに発信します。
           </p>
           <p className="text-sm text-[#9ca3af]">（インスタ・TikTok連携も今後予定）</p>
         </section>
 
         {/* Latest Articles */}
         <section className="mb-20">
-          <h2 className="text-3xl font-light mb-12 text-center teaver-heading">最新記事</h2>
+          <h2 className="text-3xl font-light mb-12 text-center tracking-[0.1em] teaver-heading">最新記事</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.slice(0, 6).map((post) => (
               <article key={post.slug} className="teaver-card rounded-2xl overflow-hidden h-full">
@@ -79,7 +80,7 @@ export default function Home() {
 
         {/* Categories */}
         <section className="mb-20">
-          <h2 className="text-3xl font-light mb-12 text-center teaver-heading">カテゴリー</h2>
+          <h2 className="text-3xl font-light mb-12 text-center tracking-[0.1em] teaver-heading">カテゴリー</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/category/日本茶">
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">

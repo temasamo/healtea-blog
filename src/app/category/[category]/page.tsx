@@ -65,7 +65,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
           <TeaLeaf />
-          <span className="text-4xl font-light tracking-wider text-center teaver-heading">HealTea</span>
+          <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
       </header>
@@ -77,7 +77,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           </a>
         </div>
         
-        <h1 className="text-5xl font-light text-center mb-16 teaver-heading">{category}</h1>
+        <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">{category}</h1>
         
         {posts.length === 0 ? (
           <div className="text-center py-16">
@@ -87,11 +87,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <article key={post.slug} className="teaver-card rounded-2xl overflow-hidden h-full">
-                {post.image && (
-                  <div className="aspect-video overflow-hidden">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-                  </div>
-                )}
                 <div className="p-8">
                   <h2 className="text-xl font-medium mb-3 teaver-heading leading-relaxed">{post.title}</h2>
                   <p className="text-[#9ca3af] text-sm mb-4">{post.date}</p>

@@ -8,6 +8,13 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import TranslateButton from '../../../components/TranslateButton';
 
+// 画像ファイルの存在をチェックする関数
+function imageExists(imagePath: string): boolean {
+  if (!imagePath) return false;
+  const publicPath = path.join(process.cwd(), 'public', imagePath);
+  return fs.existsSync(publicPath);
+}
+
 const TeaLeaf = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="16" cy="16" rx="8" ry="14" fill="#8b7355" opacity="0.8" />
@@ -67,40 +74,48 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
           <TeaLeaf />
-          <span className="text-4xl font-light tracking-wider text-center teaver-heading">HealTea</span>
+          <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
-        <article className="teaver-card rounded-2xl p-8 md:p-12 mx-auto">
-          <div className="mb-8">
-            <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-3 py-2 rounded-full hover:bg-[#f3f4f6] teaver-text">
+      <main className="max-w-5xl mx-auto px-6 py-16">
+        <article className="teaver-card rounded-2xl p-10 md:p-16 mx-auto">
+          <div className="mb-10">
+            <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-4 py-3 rounded-full hover:bg-[#f3f4f6] teaver-text">
               ← ブログ一覧へ
             </a>
           </div>
 
-          {post.image && (
-            <div className="mb-8">
-              <Image src={post.image} alt={post.title} width={800} height={400} className="rounded-2xl object-cover w-full h-80" />
+          {post.image && imageExists(post.image) && (
+            <div className="mb-10">
+              <Image 
+                src={post.image} 
+                alt={post.title} 
+                width={800} 
+                height={400} 
+                className="rounded-2xl object-cover w-full h-96"
+              />
             </div>
           )}
 
-          <h1 className="text-4xl font-light mb-6 teaver-heading leading-relaxed">{post.title}</h1>
+          <h1 className="text-5xl font-light mb-8 tracking-[0.15em] teaver-heading leading-relaxed">{post.title}</h1>
           
-          <div className="text-[#9ca3af] text-sm mb-8 flex gap-2 flex-wrap items-center">
+          <div className="text-[#9ca3af] text-sm mb-10 flex gap-3 flex-wrap items-center">
             <span>{post.date}</span>
             {post.tags && post.tags.length > 0 && (
               <span>・</span>
             )}
             {post.tags && post.tags.map((tag: string, i: number) => (
-              <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
+              <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-4 py-2 text-sm mr-2">{tag}</span>
             ))}
           </div>
 
-          <div className="prose prose-neutral max-w-none teaver-text" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+          <div className="prose prose-lg prose-neutral max-w-none teaver-text leading-relaxed" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
           
-          <TranslateButton title={post.title} content={post.contentHtml} />
+          <div className="mt-12 pt-8 border-t border-[#d4c4a8]/30">
+            <TranslateButton title={post.title} content={post.contentHtml} />
+          </div>
         </article>
       </main>
 
