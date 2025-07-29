@@ -30,10 +30,10 @@ export default function TranslateButton({ title, content }: TranslateButtonProps
   };
 
   return (
-    <div className="mt-8 pt-6 border-t border-gray-200">
+    <div className="mt-12 pt-8 border-t border-[#d4c4a8]/30">
       <button 
         onClick={handleTranslate}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        className="teaver-button text-white px-8 py-4 rounded-full hover:shadow-lg transition-all duration-300 font-medium text-lg"
       >
         🌐 英語に翻訳
       </button>

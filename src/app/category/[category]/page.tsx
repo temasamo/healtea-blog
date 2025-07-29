@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 const TeaLeaf = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="18" cy="18" rx="10" ry="18" fill="#A3C585" />
-    <path d="M18 36C18 24 18 12 18 0" stroke="#6B8E23" strokeWidth="2" />
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="16" cy="16" rx="8" ry="14" fill="#8b7355" opacity="0.8" />
+    <path d="M16 30C16 20 16 10 16 2" stroke="#a67c52" strokeWidth="1.5" />
   </svg>
 );
 
@@ -61,49 +61,49 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const posts = getPostsByCategory(category);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-800">
-      <header className="bg-white/90 border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 flex justify-center items-center h-20 gap-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
           <TeaLeaf />
-          <span className="text-3xl font-bold tracking-tight text-center">HealTea</span>
+          <span className="text-4xl font-light tracking-wider text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <div className="mb-8">
-          <a href="/" className="inline-block text-green-700 hover:text-green-900 font-medium text-base transition-colors px-2 py-1 rounded hover:bg-green-50">
+      <main className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mb-12">
+          <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-3 py-2 rounded-full hover:bg-[#f3f4f6] teaver-text">
             ← ホームへ戻る
           </a>
         </div>
         
-        <h1 className="text-4xl font-bold text-center mb-8">{category}</h1>
+        <h1 className="text-5xl font-light text-center mb-16 teaver-heading">{category}</h1>
         
         {posts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">このカテゴリーの記事はまだありません。</p>
+          <div className="text-center py-16">
+            <p className="text-[#6b7280] text-xl teaver-text">このカテゴリーの記事はまだありません。</p>
           </div>
         ) : (
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <article key={post.slug} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full">
+              <article key={post.slug} className="teaver-card rounded-2xl overflow-hidden h-full">
                 {post.image && (
                   <div className="aspect-video overflow-hidden">
                     <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
                   </div>
                 )}
-                <div className="p-6">
-                  <h2 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h2>
-                  <p className="text-gray-600 text-sm mb-4">{post.date}</p>
-                  <p className="text-gray-700 mb-4 line-clamp-3">{post.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                <div className="p-8">
+                  <h2 className="text-xl font-medium mb-3 teaver-heading leading-relaxed">{post.title}</h2>
+                  <p className="text-[#9ca3af] text-sm mb-4">{post.date}</p>
+                  <p className="text-[#6b7280] mb-6 teaver-text line-clamp-3">{post.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {post.tags && post.tags.map((tag: string) => (
-                      <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                      <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] text-xs px-3 py-1 rounded-full">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <Link href={`/blog/${post.slug}`} className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                  <Link href={`/blog/${post.slug}`} className="teaver-button text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 w-full text-center inline-block">
                     続きを読む
                   </Link>
                 </div>
@@ -113,9 +113,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         )}
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-8 mt-12 text-center text-gray-400 text-sm">
-        <div className="max-w-4xl mx-auto px-4">
-          <p>&copy; 2025 HealTea. All rights reserved.</p>
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-[#d4c4a8]/30 py-12 mt-20">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <p className="text-[#9ca3af] text-sm teaver-text">&copy; 2025 HealTea. All rights reserved.</p>
         </div>
       </footer>
     </div>

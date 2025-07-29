@@ -8,11 +8,10 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import TranslateButton from '../../../components/TranslateButton';
 
-
 const TeaLeaf = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="18" cy="18" rx="10" ry="18" fill="#A3C585" />
-    <path d="M18 36C18 24 18 12 18 0" stroke="#6B8E23" strokeWidth="2" />
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="16" cy="16" rx="8" ry="14" fill="#8b7355" opacity="0.8" />
+    <path d="M16 30C16 20 16 10 16 2" stroke="#a67c52" strokeWidth="1.5" />
   </svg>
 );
 
@@ -63,49 +62,51 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getPost(slug);
   if (!post) return notFound();
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
       {/* Header */}
-      <header className="bg-white/90 border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 flex justify-center items-center h-20 gap-6">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
           <TeaLeaf />
-          <span className="text-3xl font-bold tracking-tight text-center">HealTea</span>
+          <span className="text-4xl font-light tracking-wider text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
       </header>
-      <main className="max-w-3xl mx-auto px-4 py-12">
-        <article className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 md:p-10 mx-auto">
-          <div className="mb-6">
-            <a href="/" className="inline-block text-green-700 hover:text-green-900 font-medium text-base transition-colors px-2 py-1 rounded hover:bg-green-50">
+
+      <main className="max-w-4xl mx-auto px-6 py-16">
+        <article className="teaver-card rounded-2xl p-8 md:p-12 mx-auto">
+          <div className="mb-8">
+            <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-3 py-2 rounded-full hover:bg-[#f3f4f6] teaver-text">
               ← ブログ一覧へ
             </a>
           </div>
+
           {post.image && (
-            <div className="mb-6">
-              <Image src={post.image} alt={post.title} width={800} height={400} className="rounded-xl object-cover w-full h-64" />
+            <div className="mb-8">
+              <Image src={post.image} alt={post.title} width={800} height={400} className="rounded-2xl object-cover w-full h-80" />
             </div>
           )}
-          <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-          <div className="text-gray-400 text-sm mb-4 flex gap-2 flex-wrap">
+
+          <h1 className="text-4xl font-light mb-6 teaver-heading leading-relaxed">{post.title}</h1>
+          
+          <div className="text-[#9ca3af] text-sm mb-8 flex gap-2 flex-wrap items-center">
             <span>{post.date}</span>
             {post.tags && post.tags.length > 0 && (
               <span>・</span>
             )}
             {post.tags && post.tags.map((tag: string, i: number) => (
-              <span key={tag} className="bg-gray-100 text-gray-500 rounded px-2 py-0.5 text-xs mr-1">{tag}</span>
+              <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
             ))}
           </div>
-          <div className="prose prose-neutral max-w-none" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+
+          <div className="prose prose-neutral max-w-none teaver-text" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
           
-          {/* デバッグ用テストボタン */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500 mb-2">デバッグ: 翻訳ボタンが表示されるはずです</p>
-            <TranslateButton title={post.title} content={post.contentHtml} />
-          </div>
+          <TranslateButton title={post.title} content={post.contentHtml} />
         </article>
       </main>
-      <footer className="bg-white border-t border-gray-200 py-8 mt-12 text-center text-gray-400 text-sm">
-        <div className="max-w-4xl mx-auto px-4">
-          <p>&copy; 2025 HealTea. All rights reserved.</p>
+
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-[#d4c4a8]/30 py-12 mt-20">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <p className="text-[#9ca3af] text-sm teaver-text">&copy; 2025 HealTea. All rights reserved.</p>
         </div>
       </footer>
     </div>
