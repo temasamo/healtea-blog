@@ -111,6 +111,9 @@ export default function EnglishHome() {
             <span className="text-[#8b7355] font-medium text-sm px-3 py-1 rounded-full bg-[#f3f4f6]">
               English
             </span>
+            <Link href="/ko" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
+              한국어
+            </Link>
           </div>
         </div>
       </header>
