@@ -92,7 +92,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                   <p className="text-[#9ca3af] text-sm mb-4">{post.date}</p>
                   <p className="text-[#6b7280] mb-6 teaver-text line-clamp-3">{post.description}</p>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {post.tags && post.tags.map((tag: string) => (
+                    {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
                       <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] text-xs px-3 py-1 rounded-full">
                         {tag}
                       </span>

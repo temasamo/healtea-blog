@@ -80,10 +80,14 @@ export default function Home() {
                   <div>
                     <div className="mb-4 text-xs text-[#9ca3af] flex items-center gap-2 flex-wrap">
                       <span>{post.date}</span>
-                      <span>・</span>
-                      {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
-                        <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
-                      ))}
+                      {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
+                        <>
+                          <span>・</span>
+                          {post.tags.map((tag: string) => (
+                            <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
+                          ))}
+                        </>
+                      )}
                     </div>
                     <h3 className="text-xl font-medium mb-3 teaver-heading leading-relaxed">{post.title}</h3>
                     <p className="text-[#6b7280] mb-4 teaver-text line-clamp-3">{post.description || ''}</p>
