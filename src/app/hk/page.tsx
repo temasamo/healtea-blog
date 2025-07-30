@@ -21,8 +21,8 @@ export const metadata: Metadata = {
     title: "HealTea - 用茶葉傳遞自然的力量",
     description: "使用嚴選有機茶葉的健康與美容支持茶品牌",
     type: "website",
-    locale: "zh_TW",
-    alternateLocale: ["ja_JP", "en_US", "ko_KR"],
+    locale: "zh_HK",
+    alternateLocale: ["ja_JP", "en_US", "ko_KR", "zh_TW"],
   },
   twitter: {
     card: "summary_large_image",
@@ -30,12 +30,13 @@ export const metadata: Metadata = {
     description: "使用嚴選有機茶葉的健康與美容支持茶品牌",
   },
   alternates: {
-    canonical: "https://healtea.com/tw",
+    canonical: "https://healtea.com/hk",
     languages: {
       "ja": "https://healtea.com",
       "en": "https://healtea.com/en",
       "ko": "https://healtea.com/ko",
       "zh-TW": "https://healtea.com/tw",
+      "zh-HK": "https://healtea.com/hk",
     },
   },
 };
@@ -62,11 +63,11 @@ function getPosts() {
   return posts.slice(0, 3); // Get latest 3 posts
 }
 
-export default function TaiwaneseHomePage() {
+export default function HongKongHomePage() {
   const posts = getPosts();
 
-  // Taiwanese translations for the latest articles
-  const taiwaneseTranslations = {
+  // Hong Kong translations for the latest articles
+  const hongKongTranslations = {
     "2025-07-30-tea-cultivation-process": {
       title: "茶葉是如何製作的？從栽培開始",
       description: "從茶葉的栽培過程到製作，介紹日本茶的傳統製法。"
@@ -101,10 +102,10 @@ export default function TaiwaneseHomePage() {
               <Link href="/ko" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
                 한국어
               </Link>
-              <span className="text-[#a67c52] font-medium text-sm">繁體中文</span>
-              <Link href="/hk" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
-                香港繁體
+              <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
+                繁體中文
               </Link>
+              <span className="text-[#a67c52] font-medium text-sm">香港繁體</span>
             </nav>
           </div>
         </div>
@@ -127,7 +128,7 @@ export default function TaiwaneseHomePage() {
           <h3 className="text-3xl font-light mb-12 text-center tracking-[0.15em] teaver-heading">最新文章</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => {
-              const translation = taiwaneseTranslations[post.slug as keyof typeof taiwaneseTranslations];
+              const translation = hongKongTranslations[post.slug as keyof typeof hongKongTranslations];
               return (
                 <Link 
                   key={post.slug} 

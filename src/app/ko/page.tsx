@@ -101,6 +101,9 @@ export default function KoreanHomePage() {
               <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
                 繁體中文
               </Link>
+              <Link href="/hk" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
+                香港繁體
+              </Link>
             </nav>
           </div>
         </div>

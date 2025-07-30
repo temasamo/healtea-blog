@@ -117,6 +117,9 @@ export default function EnglishHome() {
             <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
               繁體中文
             </Link>
+            <Link href="/hk" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
+              香港繁體
+            </Link>
           </div>
         </div>
       </header>
