@@ -5,6 +5,7 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 
 // 画像ファイルの存在をチェックする関数
@@ -60,7 +61,7 @@ async function getPost(slug: string) {
   const { data, content } = matter(fileContents);
   const processedContent = await remark().use(html).process(content);
   const contentHtml = processedContent.toString();
-  return { ...(data as any), contentHtml };
+  return { ...(data as Record<string, unknown>), contentHtml };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -81,9 +82,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <main className="max-w-5xl mx-auto px-6 py-16">
         <article className="teaver-card rounded-2xl p-10 md:p-16 mx-auto">
           <div className="mb-10">
-            <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-4 py-3 rounded-full hover:bg-[#f3f4f6] teaver-text">
+            <Link href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-4 py-3 rounded-full hover:bg-[#f3f4f6] teaver-text">
               ← ブログ一覧へ
-            </a>
+            </Link>
           </div>
 
           {post.image && imageExists(post.image) && (
@@ -105,7 +106,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.tags && post.tags.length > 0 && (
               <span>・</span>
             )}
-            {post.tags && post.tags.map((tag: string, i: number) => (
+            {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
               <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-4 py-2 text-sm mr-2">{tag}</span>
             ))}
           </div>

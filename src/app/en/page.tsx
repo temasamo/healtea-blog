@@ -54,11 +54,11 @@ export default function EnglishHome() {
       tags = [];
     }
     
-    return {
-      slug: file.replace(/\.md$/, ''),
-      ...(data as any),
-      tags: tags,
-    };
+              return {
+            slug: file.replace(/\.md$/, ''),
+            ...(data as Record<string, unknown>),
+            tags: tags,
+          };
   }).sort((a, b) => (a.date < b.date ? 1 : -1));
 
   // 英語版の記事タイトルと説明のマッピング

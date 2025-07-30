@@ -72,9 +72,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
       <main className="max-w-7xl mx-auto px-6 py-16">
         <div className="mb-12">
-          <a href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-3 py-2 rounded-full hover:bg-[#f3f4f6] teaver-text">
+          <Link href="/" className="inline-block text-[#8b7355] hover:text-[#a67c52] font-medium text-base transition-colors px-3 py-2 rounded-full hover:bg-[#f3f4f6] teaver-text">
             ← ホームへ戻る
-          </a>
+          </Link>
         </div>
         
         <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">{category}</h1>

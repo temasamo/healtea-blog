@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HealTea Blog
 
-## Getting Started
+日本茶と健康をテーマにしたブログサイトです。
 
-First, run the development server:
+## 🚀 デプロイ手順
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Vercelでのデプロイ（推奨）
+
+1. **Vercelアカウント作成**
+   - [Vercel](https://vercel.com)にアクセス
+   - GitHubアカウントでサインアップ
+
+2. **プロジェクトのインポート**
+   - "New Project"をクリック
+   - GitHubリポジトリを選択
+   - 自動的にNext.jsプロジェクトとして認識されます
+
+3. **環境変数の設定**
+   - プロジェクト設定で環境変数を追加：
+   ```
+   NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+   NEXT_PUBLIC_SITE_NAME=HealTea
+   ```
+
+4. **デプロイ**
+   - "Deploy"をクリック
+   - 数分でデプロイ完了
+
+### その他のプラットフォーム
+
+#### Netlify
+- `netlify.toml`ファイルを追加
+- GitHubと連携して自動デプロイ
+
+#### GitHub Pages
+- `next.config.ts`で`output: 'export'`を設定
+- GitHub Actionsでビルド・デプロイ
+
+## 📁 プロジェクト構造
+
+```
+healtea-blog/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── page.tsx        # 日本語トップページ
+│   │   ├── en/page.tsx     # 英語トップページ
+│   │   ├── blog/[slug]/    # ブログ記事ページ
+│   │   └── category/[category]/ # カテゴリーページ
+│   ├── components/         # Reactコンポーネント
+│   └── content/blog/       # Markdown記事
+├── public/
+│   └── images/            # 画像ファイル
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 開発
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 依存関係のインストール
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 開発サーバーの起動
+npm run dev
 
-## Learn More
+# ビルド
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+# 本番サーバーの起動
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 多言語対応
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/` - 日本語版
+- `/en` - 英語版
+- 今後追加予定：韓国語、中国語（繁体字・簡体字）
 
-## Deploy on Vercel
+## 📝 記事の追加
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. `src/content/blog/`にMarkdownファイルを追加
+2. フロントマターに必要なメタデータを記述
+3. 画像は`public/images/`に配置
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔧 技術スタック
+
+- **フレームワーク**: Next.js 15.4.4
+- **言語**: TypeScript
+- **スタイリング**: Tailwind CSS
+- **コンテンツ**: Markdown + gray-matter
+- **デプロイ**: Vercel（推奨）
