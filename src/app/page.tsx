@@ -18,9 +18,19 @@ export default function Home() {
   const posts = files.map((file) => {
     const fileContents = fs.readFileSync(path.join(dir, file), 'utf8');
     const { data } = matter(fileContents);
+    
+    // tagsを配列として確実に処理
+    let tags = data.tags || [];
+    if (typeof tags === 'string') {
+      tags = [tags];
+    } else if (!Array.isArray(tags)) {
+      tags = [];
+    }
+    
     return {
       slug: file.replace(/\.md$/, ''),
       ...(data as any),
+      tags: tags,
     };
   }).sort((a, b) => (a.date < b.date ? 1 : -1));
 
@@ -33,6 +43,17 @@ export default function Home() {
           <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
           <TeaLeaf />
         </div>
+        {/* Language Switcher */}
+        <div className="max-w-5xl mx-auto px-6 pb-4 flex justify-end">
+          <div className="flex gap-2">
+            <span className="text-[#8b7355] font-medium text-sm px-3 py-1 rounded-full bg-[#f3f4f6]">
+              日本語
+            </span>
+            <Link href="/en" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
+              English
+            </Link>
+          </div>
+        </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-16">
@@ -43,8 +64,8 @@ export default function Home() {
             <span className="text-[#8b7355]">ブログ</span>
           </h1>
           <p className="text-xl text-[#6b7280] mb-4 teaver-text max-w-3xl mx-auto">
-            お茶の歴史、日本料理・旅館・おもてなし、健康診断、<br />
-            そしてお茶と健康をテーマに発信します。
+            お茶と健康をメインテーマに、お茶の歴史、日本料理・旅館・おもてなし、健康診断、<br />
+            などの情報を発信します。
           </p>
           <p className="text-sm text-[#9ca3af]">（インスタ・TikTok連携も今後予定）</p>
         </section>
@@ -60,7 +81,7 @@ export default function Home() {
                     <div className="mb-4 text-xs text-[#9ca3af] flex items-center gap-2 flex-wrap">
                       <span>{post.date}</span>
                       <span>・</span>
-                      {post.tags && post.tags.map((tag: string) => (
+                      {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
                         <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
                       ))}
                     </div>

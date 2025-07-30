@@ -6,7 +6,6 @@ import html from 'remark-html';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import TranslateButton from '../../../components/TranslateButton';
 
 // 画像ファイルの存在をチェックする関数
 function imageExists(imagePath: string): boolean {
@@ -51,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export async function generateStaticParams() {
   const dir = path.join(process.cwd(), 'src/content/blog');
   const files = fs.readdirSync(dir);
-  return files.map((file) => ({ slug: file.replace(/\\.md$/, '').replace(/\.md$/, '') }));
+  return files.map((file) => ({ slug: file.replace(/\.md$/, '').replace(/\.md$/, '') }));
 }
 
 async function getPost(slug: string) {
@@ -112,10 +111,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
 
           <div className="prose prose-lg prose-neutral max-w-none teaver-text leading-relaxed" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-          
-          <div className="mt-12 pt-8 border-t border-[#d4c4a8]/30">
-            <TranslateButton title={post.title} content={post.contentHtml} />
-          </div>
         </article>
       </main>
 

@@ -21,6 +21,20 @@ export const metadata: Metadata = {
     title: "HealTea - 自然の力をお茶で届ける",
     description: "厳選された有機茶葉を使用した、健康と美容をサポートするお茶ブランド",
     type: "website",
+    locale: "ja_JP",
+    alternateLocale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HealTea - 自然の力をお茶で届ける",
+    description: "厳選された有機茶葉を使用した、健康と美容をサポートするお茶ブランド",
+  },
+  alternates: {
+    canonical: "https://healtea.com",
+    languages: {
+      "ja": "https://healtea.com",
+      "en": "https://healtea.com/en",
+    },
   },
 };
 
@@ -31,9 +45,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <link rel="alternate" hrefLang="ja" href="https://healtea.com" />
+        <link rel="alternate" hrefLang="en" href="https://healtea.com/en" />
+        <link rel="alternate" hrefLang="x-default" href="https://healtea.com" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
