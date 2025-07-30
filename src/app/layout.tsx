@@ -35,6 +35,7 @@ export const metadata: Metadata = {
               "ja": "https://healtea.com",
               "en": "https://healtea.com/en",
               "ko": "https://healtea.com/ko",
+              "zh-TW": "https://healtea.com/tw",
             },
           },
 };
@@ -50,6 +51,7 @@ export default function RootLayout({
                 <link rel="alternate" hrefLang="ja" href="https://healtea.com" />
                 <link rel="alternate" hrefLang="en" href="https://healtea.com/en" />
                 <link rel="alternate" hrefLang="ko" href="https://healtea.com/ko" />
+                <link rel="alternate" hrefLang="zh-TW" href="https://healtea.com/tw" />
                 <link rel="alternate" hrefLang="x-default" href="https://healtea.com" />
               </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

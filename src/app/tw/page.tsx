@@ -13,28 +13,29 @@ const TeaLeaf = () => (
 );
 
 export const metadata: Metadata = {
-  title: "HealTea - 차로 전달하는 자연의 힘",
-  description: "HealTea는 엄선된 유기농 찻잎을 사용하여 여러분의 건강과 마음의 평온을 지원합니다. 전통적인 제조법과 현대 기술을 융합한 최고 품질의 차를 제공합니다.",
-  keywords: "차, 녹차, 허브티, 디톡스, 건강, 미용, 유기농 찻잎",
+  title: "HealTea - 用茶葉傳遞自然的力量",
+  description: "HealTea使用嚴選的有機茶葉，為您的健康和心靈平靜提供支持。融合傳統製法與現代技術，提供最高品質的茶品。",
+  keywords: "茶葉, 綠茶, 草本茶, 排毒, 健康, 美容, 有機茶葉",
   authors: [{ name: "HealTea" }],
   openGraph: {
-    title: "HealTea - 차로 전달하는 자연의 힘",
-    description: "엄선된 유기농 찻잎을 사용한 건강과 미용을 지원하는 차 브랜드",
+    title: "HealTea - 用茶葉傳遞自然的力量",
+    description: "使用嚴選有機茶葉的健康與美容支持茶品牌",
     type: "website",
-    locale: "ko_KR",
-    alternateLocale: ["ja_JP", "en_US"],
+    locale: "zh_TW",
+    alternateLocale: ["ja_JP", "en_US", "ko_KR"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HealTea - 차로 전달하는 자연의 힘",
-    description: "엄선된 유기농 찻잎을 사용한 건강과 미용을 지원하는 차 브랜드",
+    title: "HealTea - 用茶葉傳遞自然的力量",
+    description: "使用嚴選有機茶葉的健康與美容支持茶品牌",
   },
   alternates: {
-    canonical: "https://healtea.com/ko",
+    canonical: "https://healtea.com/tw",
     languages: {
       "ja": "https://healtea.com",
       "en": "https://healtea.com/en",
       "ko": "https://healtea.com/ko",
+      "zh-TW": "https://healtea.com/tw",
     },
   },
 };
@@ -61,22 +62,22 @@ function getPosts() {
   return posts.slice(0, 3); // Get latest 3 posts
 }
 
-export default function KoreanHomePage() {
+export default function TaiwaneseHomePage() {
   const posts = getPosts();
 
-  // Korean translations for the latest articles
-  const koreanTranslations = {
+  // Taiwanese translations for the latest articles
+  const taiwaneseTranslations = {
     "2025-07-30-tea-cultivation-process": {
-      title: "차는 어떻게 만들어질까요? 재배부터",
-      description: "차의 재배 과정부터 제조까지, 일본차의 전통적인 제조법을 소개합니다."
+      title: "茶葉是如何製作的？從栽培開始",
+      description: "從茶葉的栽培過程到製作，介紹日本茶的傳統製法。"
     },
     "2025-07-29-omotenashi-history": {
-      title: "오모테나시 문화의 기원과 정신",
-      description: "일본만의 독특한 '오모테나시' 문화의 기원과 그 정신적 배경에 대해 역사적 관점에서 살펴봅니다."
+      title: "款待文化的起源與精神",
+      description: "從歷史角度探討日本獨特的「款待」文化起源及其精神背景。"
     },
     "2025-07-29-nihoncha-history": {
-      title: "일본차의 역사: 차는 어디서 왔을까요?",
-      description: "일본차의 역사를 통해 차 문화가 어떻게 발전해왔는지 알아봅니다."
+      title: "日本茶的歷史：茶葉從哪裡來？",
+      description: "透過日本茶的歷史，了解茶文化是如何發展而來的。"
     }
   };
 
@@ -92,15 +93,15 @@ export default function KoreanHomePage() {
             </div>
             <nav className="flex items-center space-x-6">
               <Link href="/" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
-                일본어
+                日本語
               </Link>
               <Link href="/en" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
                 English
               </Link>
-              <span className="text-[#a67c52] font-medium text-sm">한국어</span>
-              <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
-                繁體中文
+              <Link href="/ko" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors">
+                한국어
               </Link>
+              <span className="text-[#a67c52] font-medium text-sm">繁體中文</span>
             </nav>
           </div>
         </div>
@@ -110,20 +111,20 @@ export default function KoreanHomePage() {
       <main className="max-w-7xl mx-auto px-6 py-16">
         <div className="text-center mb-16">
           <h2 className="text-6xl font-light mb-8 tracking-[0.15em] teaver-heading leading-tight">
-            차와 건강의 블로그
+            茶葉與健康的部落格
           </h2>
           <p className="text-xl text-[#6b7280] max-w-3xl mx-auto teaver-text leading-relaxed">
-            차와 건강을 메인 테마로, 차의 역사, 일본 요리・료칸・오모테나시, 건강검진 등의 정보를 발신합니다. 
-            (인스타・틱톡 연동도 향후 예정)
+            以茶葉與健康為主要主題，發送茶葉歷史、日本料理・旅館・款待、健康檢查等資訊。
+            （Instagram・TikTok連結也預計在未來推出）
           </p>
         </div>
 
         {/* Latest Articles */}
         <section className="mb-16">
-          <h3 className="text-3xl font-light mb-12 text-center tracking-[0.15em] teaver-heading">최신 기사</h3>
+          <h3 className="text-3xl font-light mb-12 text-center tracking-[0.15em] teaver-heading">最新文章</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => {
-              const translation = koreanTranslations[post.slug as keyof typeof koreanTranslations];
+              const translation = taiwaneseTranslations[post.slug as keyof typeof taiwaneseTranslations];
               return (
                 <Link 
                   key={post.slug} 
@@ -151,7 +152,7 @@ export default function KoreanHomePage() {
                       </p>
                     </div>
                     <div className="text-[#8b7355] text-sm font-medium group-hover:text-[#a67c52] transition-colors">
-                      더 읽기 →
+                      繼續閱讀 →
                     </div>
                   </div>
                 </Link>
@@ -162,35 +163,35 @@ export default function KoreanHomePage() {
 
         {/* Categories */}
         <section className="mb-16">
-          <h3 className="text-3xl font-light mb-12 text-center tracking-[0.15em] teaver-heading">카테고리</h3>
+          <h3 className="text-3xl font-light mb-12 text-center tracking-[0.15em] teaver-heading">分類</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link 
               href="/category/日本茶" 
               className="bg-white rounded-xl p-6 text-center hover:shadow-md transition-shadow duration-300 group"
             >
               <div className="text-2xl mb-3">🍵</div>
-              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">일본차</h4>
+              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">日本茶</h4>
             </Link>
             <Link 
               href="/category/日本の食べ物" 
               className="bg-white rounded-xl p-6 text-center hover:shadow-md transition-shadow duration-300 group"
             >
               <div className="text-2xl mb-3">🍜</div>
-              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">일본 요리</h4>
+              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">日本料理</h4>
             </Link>
             <Link 
               href="/category/健康関連" 
               className="bg-white rounded-xl p-6 text-center hover:shadow-md transition-shadow duration-300 group"
             >
               <div className="text-2xl mb-3">💚</div>
-              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">건강 관련</h4>
+              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">健康相關</h4>
             </Link>
             <Link 
               href="/category/おもてなし" 
               className="bg-white rounded-xl p-6 text-center hover:shadow-md transition-shadow duration-300 group"
             >
               <div className="text-2xl mb-3">🏮</div>
-              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">오모테나시</h4>
+              <h4 className="font-medium teaver-heading group-hover:text-[#8b7355] transition-colors">款待</h4>
             </Link>
           </div>
         </section>
@@ -200,7 +201,7 @@ export default function KoreanHomePage() {
       <footer className="bg-white border-t border-[#e5e7eb] py-12">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-[#6b7280] teaver-text">
-            © 2025 HealTea. 모든 권리 보유.
+            © 2025 HealTea. 版權所有。
           </p>
         </div>
       </footer>
