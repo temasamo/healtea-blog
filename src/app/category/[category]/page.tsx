@@ -14,12 +14,15 @@ const TeaLeaf = () => (
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   try {
     const { category: categoryParam } = await params;
+    console.log('Raw category param:', categoryParam);
     const category = decodeURIComponent(categoryParam);
+    console.log('Decoded category:', category);
     return {
       title: `${category} - HealTea`,
       description: `${category}に関する記事一覧`,
     };
   } catch (error) {
+    console.error('Error in generateMetadata:', error);
     return {
       title: 'カテゴリー - HealTea',
       description: 'カテゴリー別記事一覧',
@@ -36,6 +39,7 @@ export async function generateStaticParams() {
 
 function getPostsByCategory(category: string) {
   try {
+    console.log('Looking for posts in category:', category);
     const dir = path.join(process.cwd(), 'src/content/blog');
     const files = fs.readdirSync(dir);
     
@@ -57,9 +61,14 @@ function getPostsByCategory(category: string) {
           tags: data.tags || [],
         };
       })
-      .filter((post) => post.categories.includes(category))
+      .filter((post) => {
+        const hasCategory = post.categories.includes(category);
+        console.log(`Post ${post.slug}: categories=${post.categories}, hasCategory=${hasCategory}`);
+        return hasCategory;
+      })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
+    console.log(`Found ${posts.length} posts for category: ${category}`);
     return posts;
   } catch (error) {
     console.error('Error getting posts by category:', error);
@@ -70,15 +79,35 @@ function getPostsByCategory(category: string) {
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   let category = '';
   let posts: any[] = [];
+  let error = null;
 
   try {
     const { category: categoryParam } = await params;
-    category = decodeURIComponent(categoryParam);
+    console.log('Raw category param in component:', categoryParam);
+    
+    // 複数のデコード方法を試す
+    let decodedCategory;
+    try {
+      decodedCategory = decodeURIComponent(categoryParam);
+    } catch (decodeError) {
+      console.error('decodeURIComponent failed:', decodeError);
+      try {
+        decodedCategory = decodeURIComponent(decodeURIComponent(categoryParam));
+      } catch (doubleDecodeError) {
+        console.error('Double decode failed:', doubleDecodeError);
+        decodedCategory = categoryParam;
+      }
+    }
+    
+    category = decodedCategory;
+    console.log('Final decoded category:', category);
+    
     posts = getPostsByCategory(category);
   } catch (error) {
     console.error('Error in CategoryPage:', error);
     category = 'カテゴリー';
     posts = [];
+    error = error;
   }
 
   return (
@@ -99,6 +128,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         </div>
         
         <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">{category}</h1>
+        
+        {error && (
+          <div className="text-center py-8 mb-8 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600 text-sm">エラーが発生しました: {String(error)}</p>
+          </div>
+        )}
         
         {posts.length === 0 ? (
           <div className="text-center py-16">
