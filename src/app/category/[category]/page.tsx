@@ -12,12 +12,19 @@ const TeaLeaf = () => (
 );
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
-  const { category: categoryParam } = await params;
-  const category = decodeURIComponent(categoryParam);
-  return {
-    title: `${category} - HealTea`,
-    description: `${category}に関する記事一覧`,
-  };
+  try {
+    const { category: categoryParam } = await params;
+    const category = decodeURIComponent(categoryParam);
+    return {
+      title: `${category} - HealTea`,
+      description: `${category}に関する記事一覧`,
+    };
+  } catch (error) {
+    return {
+      title: 'カテゴリー - HealTea',
+      description: 'カテゴリー別記事一覧',
+    };
+  }
 }
 
 export async function generateStaticParams() {
@@ -28,37 +35,51 @@ export async function generateStaticParams() {
 }
 
 function getPostsByCategory(category: string) {
-  const dir = path.join(process.cwd(), 'src/content/blog');
-  const files = fs.readdirSync(dir);
-  
-  const posts = files
-    .filter((file) => file.endsWith('.md'))
-    .map((file) => {
-      const filePath = path.join(dir, file);
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      const { data } = matter(fileContents);
-      const slug = file.replace('.md', '');
-      
-      return {
-        slug,
-        title: data.title,
-        date: data.date,
-        description: data.description,
-        image: data.image,
-        categories: data.categories || [],
-        tags: data.tags || [],
-      };
-    })
-    .filter((post) => post.categories.includes(category))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  
-  return posts;
+  try {
+    const dir = path.join(process.cwd(), 'src/content/blog');
+    const files = fs.readdirSync(dir);
+    
+    const posts = files
+      .filter((file) => file.endsWith('.md'))
+      .map((file) => {
+        const filePath = path.join(dir, file);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(fileContents);
+        const slug = file.replace('.md', '');
+        
+        return {
+          slug,
+          title: data.title,
+          date: data.date,
+          description: data.description,
+          image: data.image,
+          categories: data.categories || [],
+          tags: data.tags || [],
+        };
+      })
+      .filter((post) => post.categories.includes(category))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
+    return posts;
+  } catch (error) {
+    console.error('Error getting posts by category:', error);
+    return [];
+  }
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
-  const { category: categoryParam } = await params;
-  const category = decodeURIComponent(categoryParam);
-  const posts = getPostsByCategory(category);
+  let category = '';
+  let posts: any[] = [];
+
+  try {
+    const { category: categoryParam } = await params;
+    category = decodeURIComponent(categoryParam);
+    posts = getPostsByCategory(category);
+  } catch (error) {
+    console.error('Error in CategoryPage:', error);
+    category = 'カテゴリー';
+    posts = [];
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">

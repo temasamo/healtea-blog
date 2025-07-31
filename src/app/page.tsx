@@ -27,11 +27,14 @@ export default function Home() {
       tags = [];
     }
     
-              return {
-            slug: file.replace(/\.md$/, ''),
-            ...(data as Record<string, unknown>),
-            tags: tags,
-          };
+    return {
+      slug: file.replace(/\.md$/, ''),
+      title: data.title || '',
+      date: data.date || '',
+      description: data.description || '',
+      categories: data.categories || [],
+      tags: tags,
+    };
   }).sort((a, b) => (a.date < b.date ? 1 : -1));
 
   return (
@@ -116,22 +119,22 @@ export default function Home() {
         <section className="mb-20">
           <h2 className="text-3xl font-light mb-12 text-center tracking-[0.1em] teaver-heading">カテゴリー</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link href="/category/日本茶">
+            <Link href={`/category/${encodeURIComponent('日本茶')}`}>
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
                 日本茶
               </span>
             </Link>
-            <Link href="/category/日本の食べ物">
+            <Link href={`/category/${encodeURIComponent('日本の食べ物')}`}>
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
                 日本の食べ物
               </span>
             </Link>
-            <Link href="/category/健康関連">
+            <Link href={`/category/${encodeURIComponent('健康関連')}`}>
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
                 健康関連
               </span>
             </Link>
-            <Link href="/category/おもてなし">
+            <Link href={`/category/${encodeURIComponent('おもてなし')}`}>
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
                 おもてなし
               </span>
