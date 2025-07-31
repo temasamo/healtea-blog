@@ -29,16 +29,13 @@ export const metadata: Metadata = {
     title: "HealTea - 自然の力をお茶で届ける",
     description: "厳選された有機茶葉を使用した、健康と美容をサポートするお茶ブランド",
   },
-            alternates: {
-            canonical: "https://healtea.com",
-            languages: {
-              "ja": "https://healtea.com",
-              "en": "https://healtea.com/en",
-              "ko": "https://healtea.com/ko",
-              "zh-TW": "https://healtea.com/tw",
-              "zh-HK": "https://healtea.com/hk",
-            },
-          },
+  alternates: {
+    canonical: "https://healtea.com",
+    languages: {
+      "ja": "https://healtea.com",
+      "en": "https://healtea.com/en",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -48,14 +45,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-                    <head>
-                <link rel="alternate" hrefLang="ja" href="https://healtea.com" />
-                <link rel="alternate" hrefLang="en" href="https://healtea.com/en" />
-                <link rel="alternate" hrefLang="ko" href="https://healtea.com/ko" />
-                <link rel="alternate" hrefLang="zh-TW" href="https://healtea.com/tw" />
-                <link rel="alternate" hrefLang="zh-HK" href="https://healtea.com/hk" />
-                <link rel="alternate" hrefLang="x-default" href="https://healtea.com" />
-              </head>
+      <head>
+        <link rel="alternate" hrefLang="ja" href="https://healtea.com" />
+        <link rel="alternate" hrefLang="en" href="https://healtea.com/en" />
+        <link rel="alternate" hrefLang="x-default" href="https://healtea.com" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
