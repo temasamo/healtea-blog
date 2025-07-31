@@ -11,15 +11,28 @@ const TeaLeaf = () => (
   </svg>
 );
 
+// カテゴリー名とスラッグのマッピング
+const categorySlugMap: { [key: string]: string } = {
+  'japanese-tea': '日本茶',
+  'japanese-food': '日本の食べ物',
+  'health': '健康関連',
+  'omotenashi': 'おもてなし'
+};
+
+const categoryNameMap: { [key: string]: string } = {
+  '日本茶': 'japanese-tea',
+  '日本の食べ物': 'japanese-food',
+  '健康関連': 'health',
+  'おもてなし': 'omotenashi'
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   try {
-    const { category: categoryParam } = await params;
-    console.log('Raw category param:', categoryParam);
-    const category = decodeURIComponent(categoryParam);
-    console.log('Decoded category:', category);
+    const { category: categorySlug } = await params;
+    const categoryName = categorySlugMap[categorySlug] || categorySlug;
     return {
-      title: `${category} - HealTea`,
-      description: `${category}に関する記事一覧`,
+      title: `${categoryName} - HealTea`,
+      description: `${categoryName}に関する記事一覧`,
     };
   } catch (error) {
     console.error('Error in generateMetadata:', error);
@@ -31,15 +44,14 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 }
 
 export async function generateStaticParams() {
-  const categories = ['日本茶', '日本の食べ物', '健康関連', 'おもてなし'];
-  return categories.map((category) => ({
-    category: encodeURIComponent(category),
+  return Object.keys(categorySlugMap).map((slug) => ({
+    category: slug,
   }));
 }
 
-function getPostsByCategory(category: string) {
+function getPostsByCategory(categoryName: string) {
   try {
-    console.log('Looking for posts in category:', category);
+    console.log('Looking for posts in category:', categoryName);
     const dir = path.join(process.cwd(), 'src/content/blog');
     const files = fs.readdirSync(dir);
     
@@ -62,13 +74,13 @@ function getPostsByCategory(category: string) {
         };
       })
       .filter((post) => {
-        const hasCategory = post.categories.includes(category);
+        const hasCategory = post.categories.includes(categoryName);
         console.log(`Post ${post.slug}: categories=${post.categories}, hasCategory=${hasCategory}`);
         return hasCategory;
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
-    console.log(`Found ${posts.length} posts for category: ${category}`);
+    console.log(`Found ${posts.length} posts for category: ${categoryName}`);
     return posts;
   } catch (error) {
     console.error('Error getting posts by category:', error);
@@ -77,35 +89,22 @@ function getPostsByCategory(category: string) {
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
-  let category = '';
+  let categoryName = '';
   let posts: any[] = [];
   let error = null;
 
   try {
-    const { category: categoryParam } = await params;
-    console.log('Raw category param in component:', categoryParam);
+    const { category: categorySlug } = await params;
+    console.log('Category slug:', categorySlug);
     
-    // 複数のデコード方法を試す
-    let decodedCategory;
-    try {
-      decodedCategory = decodeURIComponent(categoryParam);
-    } catch (decodeError) {
-      console.error('decodeURIComponent failed:', decodeError);
-      try {
-        decodedCategory = decodeURIComponent(decodeURIComponent(categoryParam));
-      } catch (doubleDecodeError) {
-        console.error('Double decode failed:', doubleDecodeError);
-        decodedCategory = categoryParam;
-      }
-    }
+    // スラッグからカテゴリー名を取得
+    categoryName = categorySlugMap[categorySlug] || categorySlug;
+    console.log('Category name:', categoryName);
     
-    category = decodedCategory;
-    console.log('Final decoded category:', category);
-    
-    posts = getPostsByCategory(category);
+    posts = getPostsByCategory(categoryName);
   } catch (error) {
     console.error('Error in CategoryPage:', error);
-    category = 'カテゴリー';
+    categoryName = 'カテゴリー';
     posts = [];
     error = error;
   }
@@ -127,7 +126,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           </Link>
         </div>
         
-        <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">{category}</h1>
+        <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">{categoryName}</h1>
         
         {error && (
           <div className="text-center py-8 mb-8 bg-red-50 border border-red-200 rounded-lg">
