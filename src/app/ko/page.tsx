@@ -40,20 +40,42 @@ export const metadata: Metadata = {
 };
 
 function getPosts() {
-  const postsDirectory = path.join(process.cwd(), 'src/content/blog');
-  const filenames = fs.readdirSync(postsDirectory);
+  // 記事一覧を取得（サブディレクトリも含む）
+  function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+    const files = fs.readdirSync(dirPath);
+    
+    files.forEach((file) => {
+      const fullPath = path.join(dirPath, file);
+      if (fs.statSync(fullPath).isDirectory()) {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+      } else if (file.endsWith('.md')) {
+        arrayOfFiles.push(fullPath);
+      }
+    });
+    
+    return arrayOfFiles;
+  }
   
-  const posts = filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
+  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const allFiles = getAllFiles(blogDir);
+  
+  const posts = allFiles.map((filePath) => {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(fileContents);
+    
+    // ファイル名からslugを生成（パスを含む）
+    const relativePath = path.relative(blogDir, filePath);
+    const slug = relativePath.replace(/\.md$/, '');
     
     // Ensure tags is always an array
     const tags = Array.isArray(data.tags) ? data.tags : [];
     
     return {
-      slug: filename.replace(/\.md$/, ''),
-      ...(data as Record<string, unknown>),
+      slug: slug,
+      title: data.title || '',
+      date: data.date || '',
+      description: data.description || '',
+      categories: data.categories || [],
       tags: tags,
     };
   }).sort((a, b) => (a.date < b.date ? 1 : -1));

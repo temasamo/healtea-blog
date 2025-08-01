@@ -39,12 +39,32 @@ export const metadata: Metadata = {
 };
 
 export default function EnglishHome() {
-  // 記事一覧を取得
-  const dir = path.join(process.cwd(), 'src/content/blog');
-  const files = fs.readdirSync(dir);
-  const posts = files.map((file) => {
-    const fileContents = fs.readFileSync(path.join(dir, file), 'utf8');
+  // 記事一覧を取得（サブディレクトリも含む）
+  function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+    const files = fs.readdirSync(dirPath);
+    
+    files.forEach((file) => {
+      const fullPath = path.join(dirPath, file);
+      if (fs.statSync(fullPath).isDirectory()) {
+        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+      } else if (file.endsWith('.md')) {
+        arrayOfFiles.push(fullPath);
+      }
+    });
+    
+    return arrayOfFiles;
+  }
+  
+  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const allFiles = getAllFiles(blogDir);
+  
+  const posts = allFiles.map((filePath) => {
+    const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(fileContents);
+    
+    // ファイル名からslugを生成（パスを含む）
+    const relativePath = path.relative(blogDir, filePath);
+    const slug = relativePath.replace(/\.md$/, '');
     
     // tagsを配列として確実に処理
     let tags = data.tags || [];
@@ -54,11 +74,14 @@ export default function EnglishHome() {
       tags = [];
     }
     
-              return {
-            slug: file.replace(/\.md$/, ''),
-            ...(data as Record<string, unknown>),
-            tags: tags,
-          };
+    return {
+      slug: slug,
+      title: data.title || '',
+      date: data.date || '',
+      description: data.description || '',
+      categories: data.categories || [],
+      tags: tags,
+    };
   }).sort((a, b) => (a.date < b.date ? 1 : -1));
 
   // 英語版の記事タイトルと説明のマッピング
