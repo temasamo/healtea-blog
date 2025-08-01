@@ -1,4 +1,3 @@
-import Image from "next/image";
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -12,220 +11,148 @@ const TeaLeaf = () => (
   </svg>
 );
 
-export const metadata: Metadata = {
-  title: "HealTea - Tea & Health Blog",
-  description: "Discovering the world of Japanese tea, cuisine, hospitality, and wellness. Explore the rich traditions and modern insights of Japanese culture.",
-  keywords: "japanese tea, green tea, matcha, japanese cuisine, omotenashi, wellness, health, japanese culture",
-  authors: [{ name: "HealTea" }],
-  openGraph: {
-    title: "HealTea - Tea & Health Blog",
-    description: "Discovering the world of Japanese tea, cuisine, hospitality, and wellness",
-    type: "website",
-    locale: "en_US",
-    alternateLocale: "ja_JP",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "HealTea - Tea & Health Blog",
-    description: "Discovering the world of Japanese tea, cuisine, hospitality, and wellness",
-  },
-  alternates: {
-    canonical: "https://healtea.com/en",
-    languages: {
-      "ja": "https://healtea.com",
-      "en": "https://healtea.com/en",
-    },
-  },
-};
-
-export default function EnglishHome() {
-  // 記事一覧を取得（サブディレクトリも含む）
-  function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
-    const files = fs.readdirSync(dirPath);
-    
-    files.forEach((file) => {
-      const fullPath = path.join(dirPath, file);
-      if (fs.statSync(fullPath).isDirectory()) {
-        arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
-      } else if (file.endsWith('.md')) {
-        arrayOfFiles.push(fullPath);
-      }
-    });
-    
-    return arrayOfFiles;
-  }
+// 英語記事のディレクトリ内のファイルを取得する関数
+function getAllEnglishFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  const files = fs.readdirSync(dirPath);
   
-  const blogDir = path.join(process.cwd(), 'src/content/blog');
-  const allFiles = getAllFiles(blogDir);
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllEnglishFiles(fullPath, arrayOfFiles);
+    } else if (file.endsWith('.md')) {
+      arrayOfFiles.push(fullPath);
+    }
+  });
+  
+  return arrayOfFiles;
+}
+
+interface EnglishPost {
+  slug: string;
+  title: string;
+  date: string;
+  description?: string;
+  categories?: string[];
+  tags?: string[];
+  author: string;
+  image?: string;
+  lang?: string;
+}
+
+// 英語記事を取得する関数
+function getEnglishPosts(): EnglishPost[] {
+  const blogDir = path.join(process.cwd(), 'src/content/blog/en');
+  if (!fs.existsSync(blogDir)) return [];
+  
+  const allFiles = getAllEnglishFiles(blogDir);
   
   const posts = allFiles.map((filePath) => {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data } = matter(fileContents);
-    
-    // ファイル名からslugを生成（パスを含む）
     const relativePath = path.relative(blogDir, filePath);
     const slug = relativePath.replace(/\.md$/, '');
     
-    // tagsを配列として確実に処理
-    let tags = data.tags || [];
-    if (typeof tags === 'string') {
-      tags = [tags];
-    } else if (!Array.isArray(tags)) {
-      tags = [];
-    }
-    
     return {
-      slug: slug,
-      title: data.title || '',
-      date: data.date || '',
-      description: data.description || '',
-      categories: data.categories || [],
-      tags: tags,
-    };
-  }).sort((a, b) => (a.date < b.date ? 1 : -1));
+      slug,
+      ...data,
+    } as EnglishPost;
+  });
 
-  // 英語版の記事タイトルと説明のマッピング
-  const englishTranslations: { [key: string]: { title: string; description: string } } = {
-    '2025-07-29-japanese-food-part1': {
-      title: 'Top 10 Popular Japanese Foods Among International Travelers - Part 1 (Rankings 1-5)',
-      description: 'Discover the most popular Japanese dishes among international tourists, featuring sushi, ramen, tempura, and more. Based on the latest 2024 survey.'
-    },
-    '2025-07-29-japanese-food-part2': {
-      title: 'Top 10 Popular Japanese Foods Among International Travelers - Part 2 (Rankings 6-10)',
-      description: 'Explore the second half of Japan\'s most beloved dishes among international visitors, from oyakodon to gyoza.'
-    },
-    '2025-07-29-japanese-food-part3': {
-      title: 'Trending Japanese Foods That Are Gaining International Attention',
-      description: 'Discover the latest trending Japanese dishes that are capturing the hearts of international food enthusiasts.'
-    },
-    '2025-07-29-green-tea-health-benefits': {
-      title: 'Amazing Health Benefits of Green Tea: Nutrients and Their Effects',
-      description: 'Learn about the key components in Japanese tea (catechins, theanine, caffeine) and their health impacts.'
-    },
-    '2025-07-29-nihoncha-history': {
-      title: 'The History and Culture of Japanese Tea',
-      description: 'Explore the rich history and cultural significance of Japanese tea from ancient times to modern day.'
-    },
-    '2025-07-29-omotenashi-history': {
-      title: 'The Origins and Spirit of Japanese Omotenashi Culture',
-      description: 'Discover the historical roots and spiritual background of Japan\'s unique omotenashi hospitality culture.'
-    },
-    '2025-07-30-tea-cultivation-process': {
-      title: 'The Art of Japanese Tea Cultivation and Processing',
-      description: 'Learn about the traditional methods and modern techniques used in Japanese tea cultivation and production.'
-    }
-  };
+  // 日付順にソート（新しい順）
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export const metadata: Metadata = {
+  title: 'HealTea Blog - English Edition',
+  description: 'Discover the beauty of Japanese tea culture, hospitality, and traditions through our English blog posts.',
+};
+
+export default function EnglishBlogPage() {
+  const posts = getEnglishPosts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
-          <TeaLeaf />
-          <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
-          <TeaLeaf />
-        </div>
-        {/* Language Switcher */}
-        <div className="max-w-5xl mx-auto px-6 pb-4 flex justify-end">
-          <div className="flex gap-2">
-            <Link href="/" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
-              日本語
-            </Link>
-            <span className="text-[#8b7355] font-medium text-sm px-3 py-1 rounded-full bg-[#f3f4f6]">
-              English
-            </span>
-            <Link href="/ko" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
-              한국어
-            </Link>
-            <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
-              繁體中文
-            </Link>
-            <Link href="/hk" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
-              香港繁體
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-6 py-16">
-        {/* Hero Section */}
-        <section className="mb-20 text-center">
-          <h1 className="text-5xl sm:text-6xl font-light mb-8 tracking-[0.15em] font-sans">
-            Tea & Health<br />
-            <span className="text-[#8b7355]">Blog</span>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-yellow-50">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* ヘッダー */}
+        <header className="text-center mb-12">
+          <Link href="/" className="inline-flex items-center text-green-700 hover:text-green-800 mb-6">
+            <TeaLeaf />
+            <span className="ml-2 font-medium">← Back to Japanese Blog</span>
+          </Link>
+          
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            HealTea Blog - English Edition
           </h1>
-          <p className="text-xl text-[#6b7280] mb-4 teaver-text max-w-3xl mx-auto">
-            Discovering the world of Japanese tea, cuisine, hospitality, and wellness.<br />
-            Exploring the rich traditions and modern insights of Japanese culture.
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Discover the beauty of Japanese tea culture, hospitality, and traditions through our English blog posts.
           </p>
-          <p className="text-sm text-[#9ca3af]">(Instagram & TikTok integration coming soon)</p>
-        </section>
+        </header>
 
-        {/* Latest Articles */}
-        <section className="mb-20">
-          <h2 className="text-3xl font-light mb-12 text-center tracking-[0.1em] teaver-heading">Latest Articles</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.slice(0, 6).map((post) => {
-              const translation = englishTranslations[post.slug] || { title: post.title, description: post.description };
-              return (
-                <article key={post.slug} className="teaver-card rounded-2xl overflow-hidden h-full">
-                  <div className="p-8 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="mb-4 text-xs text-[#9ca3af] flex items-center gap-2 flex-wrap">
-                        <span>{post.date}</span>
-                        <span>・</span>
-                        {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
-                          <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] rounded-full px-3 py-1 text-xs mr-1">{tag}</span>
-                        ))}
-                      </div>
-                      <h3 className="text-xl font-medium mb-3 teaver-heading leading-relaxed">{translation.title}</h3>
-                      <p className="text-[#6b7280] mb-4 teaver-text line-clamp-3">{translation.description || ''}</p>
-                    </div>
-                    <div className="mt-6">
-                      <Link href={`/blog/${post.slug}`} className="teaver-button text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 w-full text-center inline-block">
-                        Read More
-                      </Link>
-                    </div>
+        {/* 記事一覧 */}
+        <main className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <article key={post.slug} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <Link href={`/en/blog/${encodeURIComponent(post.slug)}`}>
+                {post.image && (
+                  <div className="h-48 bg-gray-200">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
+                )}
+                
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                    {post.title}
+                  </h2>
+                  
+                  <div className="flex items-center text-gray-600 mb-3">
+                    <span className="mr-4">📅 {new Date(post.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    })}</span>
+                    <span>👤 {post.author}</span>
+                  </div>
+                  
+                  {post.description && (
+                    <p className="text-gray-700 mb-4 line-clamp-3">
+                      {post.description}
+                    </p>
+                  )}
+                  
+                  {post.categories && (
+                    <div className="flex flex-wrap gap-2">
+                      {post.categories.map((category: string) => (
+                        <span key={category} className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </Link>
+            </article>
+          ))}
+        </main>
 
-        {/* Categories */}
-        <section className="mb-20">
-          <h2 className="text-3xl font-light mb-12 text-center tracking-[0.1em] teaver-heading">Categories</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link href="/category/日本茶">
-              <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
-                Japanese Tea
-              </span>
-            </Link>
-            <Link href="/category/日本の食べ物">
-              <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
-                Japanese Cuisine
-              </span>
-            </Link>
-            <Link href="/category/健康関連">
-              <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
-                Health & Wellness
-              </span>
-            </Link>
-            <Link href="/category/おもてなし">
-              <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
-                Omotenashi
-              </span>
-            </Link>
+        {posts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">No English articles available yet.</p>
+            <p className="text-gray-500 mt-2">Check back soon for new content!</p>
           </div>
-        </section>
-      </main>
+        )}
 
-      <footer className="bg-white/80 backdrop-blur-sm border-t border-[#d4c4a8]/30 py-12 mt-20">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <p className="text-[#9ca3af] text-sm teaver-text">&copy; 2025 HealTea. All rights reserved.</p>
-        </div>
-      </footer>
+        {/* フッター */}
+        <footer className="mt-12 text-center text-gray-600">
+          <p>© 2025 HealTea Blog - English Edition</p>
+          <p className="mt-2 text-sm">
+            Exploring Japanese culture through the lens of tea and hospitality
+          </p>
+        </footer>
+      </div>
     </div>
   );
 } 
