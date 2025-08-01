@@ -49,19 +49,36 @@ export async function generateStaticParams() {
   }));
 }
 
+// サブディレクトリ内のファイルも含めて取得する関数
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  const files = fs.readdirSync(dirPath);
+  
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+    } else if (file.endsWith('.md')) {
+      arrayOfFiles.push(fullPath);
+    }
+  });
+  
+  return arrayOfFiles;
+}
+
 function getPostsByCategory(categoryName: string) {
   try {
     console.log('Looking for posts in category:', categoryName);
-    const dir = path.join(process.cwd(), 'src/content/blog');
-    const files = fs.readdirSync(dir);
+    const blogDir = path.join(process.cwd(), 'src/content/blog');
+    const allFiles = getAllFiles(blogDir);
     
-    const posts = files
-      .filter((file) => file.endsWith('.md'))
-      .map((file) => {
-        const filePath = path.join(dir, file);
+    const posts = allFiles
+      .map((filePath) => {
         const fileContents = fs.readFileSync(filePath, 'utf8');
         const { data } = matter(fileContents);
-        const slug = file.replace('.md', '');
+        
+        // ファイル名からslugを生成（パスを含む）
+        const relativePath = path.relative(blogDir, filePath);
+        const slug = relativePath.replace(/\.md$/, '');
         
         return {
           slug,

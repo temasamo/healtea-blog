@@ -22,10 +22,42 @@ const TeaLeaf = () => (
   </svg>
 );
 
+// サブディレクトリ内のファイルも含めて取得する関数
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  const files = fs.readdirSync(dirPath);
+  
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
+    } else if (file.endsWith('.md')) {
+      arrayOfFiles.push(fullPath);
+    }
+  });
+  
+  return arrayOfFiles;
+}
+
+// slugからファイルパスを取得する関数
+function getFilePathFromSlug(slug: string): string | null {
+  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const allFiles = getAllFiles(blogDir);
+  
+  for (const filePath of allFiles) {
+    const relativePath = path.relative(blogDir, filePath);
+    const fileSlug = relativePath.replace(/\.md$/, '');
+    if (fileSlug === slug) {
+      return filePath;
+    }
+  }
+  
+  return null;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const filePath = path.join(process.cwd(), 'src/content/blog', `${slug}.md`);
-  if (!fs.existsSync(filePath)) return {};
+  const filePath = getFilePathFromSlug(slug);
+  if (!filePath || !fs.existsSync(filePath)) return {};
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data } = matter(fileContents);
   return {
@@ -49,19 +81,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export async function generateStaticParams() {
-  const dir = path.join(process.cwd(), 'src/content/blog');
-  const files = fs.readdirSync(dir);
-  return files.map((file) => ({ slug: file.replace(/\.md$/, '').replace(/\.md$/, '') }));
+  const blogDir = path.join(process.cwd(), 'src/content/blog');
+  const allFiles = getAllFiles(blogDir);
+  
+  return allFiles.map((filePath) => {
+    const relativePath = path.relative(blogDir, filePath);
+    const slug = relativePath.replace(/\.md$/, '');
+    return { slug };
+  });
 }
 
 async function getPost(slug: string) {
-  const filePath = path.join(process.cwd(), 'src/content/blog', `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+  const filePath = getFilePathFromSlug(slug);
+  if (!filePath || !fs.existsSync(filePath)) return null;
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
   const processedContent = await remark().use(html).process(content);
   const contentHtml = processedContent.toString();
-  return { ...(data as Record<string, unknown>), contentHtml };
+  return { ...(data as any), contentHtml };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
