@@ -11,7 +11,7 @@ const TeaLeaf = () => (
   </svg>
 );
 
-export default function HongKongChineseHome() {
+export default function TraditionalChineseHome() {
   // 記事一覧を取得（サブディレクトリも含む）
   function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
     const files = fs.readdirSync(dirPath);
@@ -78,12 +78,12 @@ export default function HongKongChineseHome() {
             <Link href="/ko" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
               한국어
             </Link>
-            <Link href="/tw" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
-              繁體中文
-            </Link>
             <span className="text-[#8b7355] font-medium text-sm px-3 py-1 rounded-full bg-[#f3f4f6]">
-              香港繁體
+              繁體中文
             </span>
+            <Link href="/hk" className="text-[#8b7355] hover:text-[#a67c52] font-medium text-sm transition-colors px-3 py-1 rounded-full hover:bg-[#f3f4f6]">
+              香港繁體
+            </Link>
           </div>
         </div>
       </header>
@@ -93,7 +93,7 @@ export default function HongKongChineseHome() {
         <section className="mb-20 text-center">
           <h1 className="text-5xl sm:text-6xl font-light mb-8 tracking-[0.15em] font-sans">
             茶與健康<br />
-            <span className="text-[#8b7355]">網誌</span>
+            <span className="text-[#8b7355]">部落格</span>
           </h1>
           <p className="text-xl text-[#6b7280] mb-4 teaver-text max-w-3xl mx-auto">
             以茶與健康為主題，分享茶葉歷史、日本料理・旅館・款待文化、健康檢查<br />
