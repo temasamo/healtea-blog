@@ -170,7 +170,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                       </span>
                     ))}
                   </div>
-                  <Link href={`/blog/${post.slug}`} className="teaver-button text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 w-full text-center inline-block">
+                  <Link href={`/blog/${encodeURIComponent(post.slug)}`} className="teaver-button text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 w-full text-center inline-block">
                     続きを読む
                   </Link>
                 </div>

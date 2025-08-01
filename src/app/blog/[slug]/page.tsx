@@ -56,7 +56,8 @@ function getFilePathFromSlug(slug: string): string | null {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const filePath = getFilePathFromSlug(slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const filePath = getFilePathFromSlug(decodedSlug);
   if (!filePath || !fs.existsSync(filePath)) return {};
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data } = matter(fileContents);
@@ -87,12 +88,13 @@ export async function generateStaticParams() {
   return allFiles.map((filePath) => {
     const relativePath = path.relative(blogDir, filePath);
     const slug = relativePath.replace(/\.md$/, '');
-    return { slug };
+    return { slug: encodeURIComponent(slug) };
   });
 }
 
 async function getPost(slug: string) {
-  const filePath = getFilePathFromSlug(slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const filePath = getFilePathFromSlug(decodedSlug);
   if (!filePath || !fs.existsSync(filePath)) return null;
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
