@@ -12,6 +12,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
             strategy="afterInteractive"
+            onLoad={() => {
+              console.log('Google Analytics script loaded');
+            }}
+            onError={(e) => {
+              console.error('Google Analytics script failed to load:', e);
+            }}
           />
           <Script id="gtag-init" strategy="afterInteractive">
             {`
@@ -20,9 +26,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               gtag('js', new Date());
               gtag('config', '${GA_ID}', {
                 page_path: window.location.pathname,
-                debug_mode: ${process.env.NODE_ENV === 'development' ? 'true' : 'false'}
+                debug_mode: ${process.env.NODE_ENV === 'development' ? 'true' : 'false'},
+                send_page_view: true
               });
               console.log('Google Analytics initialized with ID: ${GA_ID}');
+              console.log('Current page path:', window.location.pathname);
+              
+              // 手動でページビューを送信
+              gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+              });
             `}
           </Script>
         </>
