@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
+import HomeAnalytics from '@/components/HomeAnalytics';
 
 const TeaLeaf = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -365,16 +366,19 @@ export default async function Home({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
+      <HomeAnalytics currentLang={currentLang} />
+      
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">
-          <TeaLeaf />
-          <span className="text-5xl font-light tracking-[0.3em] text-center teaver-heading">HealTea</span>
-          <TeaLeaf />
-        </div>
-        {/* Language Switcher */}
-        <div className="max-w-5xl mx-auto px-6 pb-4 flex justify-end">
-          <div className="flex gap-2">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-24">
+          <div className="flex items-center gap-8">
+            <TeaLeaf />
+            <span className="text-5xl font-light tracking-[0.3em] teaver-heading">HealTea</span>
+            <TeaLeaf />
+          </div>
+          
+          {/* Language Switcher */}
+          <div className="flex items-center gap-2">
             <Link href="/" className={`font-medium text-sm px-3 py-1 rounded-full transition-colors ${
               currentLang === 'ja' 
                 ? 'text-[#8b7355] bg-[#f3f4f6]' 
@@ -387,7 +391,7 @@ export default async function Home({
                 ? 'text-[#8b7355] bg-[#f3f4f6]' 
                 : 'text-[#8b7355] hover:text-[#a67c52] hover:bg-[#f3f4f6]'
             }`}>
-              English
+              ENGLISH
             </Link>
             <Link href="/?lang=ko" className={`font-medium text-sm px-3 py-1 rounded-full transition-colors ${
               currentLang === 'ko' 

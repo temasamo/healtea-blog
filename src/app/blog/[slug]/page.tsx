@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import ArticleAnalytics from '@/components/ArticleAnalytics';
 
 // 画像ファイルの存在をチェックする関数
 function imageExists(imagePath: string): boolean {
@@ -107,8 +108,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return notFound();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
+      <ArticleAnalytics 
+        title={post.title} 
+        category={post.categories?.[0] || '未分類'} 
+        slug={slug} 
+      />
+      
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#d4c4a8]/30 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-6 flex justify-center items-center h-24 gap-8">

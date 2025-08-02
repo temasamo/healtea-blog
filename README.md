@@ -1,90 +1,178 @@
 # HealTea Blog
 
-日本茶と健康をテーマにしたブログサイトです。
+自然の力をお茶で届けるHealTeaの公式ブログです。お茶の歴史、日本料理、旅館・おもてなし、健康診断などの情報を発信しています。
 
-## 🚀 デプロイ手順
+## 機能
 
-### Vercelでのデプロイ（推奨）
+- 📝 マークダウン形式の記事管理
+- 🌍 多言語対応（日本語、英語、韓国語、繁体中文、香港繁体）
+- 📱 レスポンシブデザイン
+- 🔍 SEO最適化
+- 📊 Google アナリティクス連携
+- ⚡ Next.js 15 + App Router
 
-1. **Vercelアカウント作成**
-   - [Vercel](https://vercel.com)にアクセス
-   - GitHubアカウントでサインアップ
+## 技術スタック
 
-2. **プロジェクトのインポート**
-   - "New Project"をクリック
-   - GitHubリポジトリを選択
-   - 自動的にNext.jsプロジェクトとして認識されます
+- **Framework**: Next.js 15.4.4
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Content**: Markdown + gray-matter
+- **Deployment**: Vercel
+- **Analytics**: Google Analytics 4
 
-3. **環境変数の設定**
-   - プロジェクト設定で環境変数を追加：
-   ```
-   NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
-   NEXT_PUBLIC_SITE_NAME=HealTea
-   ```
+## セットアップ
 
-4. **デプロイ**
-   - "Deploy"をクリック
-   - 数分でデプロイ完了
+### 1. 依存関係のインストール
 
-### その他のプラットフォーム
+```bash
+npm install
+```
 
-#### Netlify
-- `netlify.toml`ファイルを追加
-- GitHubと連携して自動デプロイ
+### 2. 環境変数の設定
 
-#### GitHub Pages
-- `next.config.ts`で`output: 'export'`を設定
-- GitHub Actionsでビルド・デプロイ
+`.env.local`ファイルを作成し、Google アナリティクスの測定IDを設定してください：
 
-## 📁 プロジェクト構造
+```bash
+# Google Analytics
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+### 3. 開発サーバーの起動
+
+```bash
+npm run dev
+```
+
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
+
+## Google アナリティクス設定
+
+### 1. Google アナリティクスアカウントの作成
+
+1. [Google Analytics](https://analytics.google.com/) にアクセス
+2. 新しいプロパティを作成
+3. 測定ID（G-XXXXXXXXXX形式）を取得
+
+### 2. 環境変数の設定
+
+`.env.local`ファイルに測定IDを設定：
+
+```bash
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+### 3. 追跡されるイベント
+
+以下のイベントが自動的に追跡されます：
+
+- **ページビュー**: 各ページの表示
+- **記事表示**: 記事ページの表示（タイトル、カテゴリ）
+- **言語切り替え**: 多言語切り替えの使用
+- **カテゴリクリック**: カテゴリページへの移動
+
+### 4. カスタムイベントの追加
+
+新しいイベントを追跡する場合は、`useAnalytics`フックを使用：
+
+```typescript
+import { useAnalytics } from '@/hooks/useAnalytics';
+
+const { trackEvent } = useAnalytics();
+
+// カスタムイベントの送信
+trackEvent('button_click', 'engagement', 'subscribe_button');
+```
+
+## 記事の追加
+
+### 日本語記事
+
+各カテゴリディレクトリに`.md`ファイルを追加：
+
+```
+src/content/blog/
+├── about-japanesetea/
+├── health/
+├── japanesefood/
+├── omotenasi/
+└── travelers/
+```
+
+### 英語記事
+
+`travelers/`ディレクトリに`-en`サフィックス付きで追加：
+
+```
+src/content/blog/travelers/
+├── 2025-07-29-nihoncha-history-en.md
+└── 2025-07-31-ryokan-onsen-en.md
+```
+
+### 記事のフロントマター
+
+```yaml
+---
+title: "記事タイトル"
+date: "2025-08-02"
+description: "記事の説明"
+categories: ["カテゴリ名"]
+tags: ["タグ1", "タグ2"]
+author: HealTea
+image: "/blog/image.jpg"
+lang: "ja"  # 英語記事の場合は "en"
+---
+```
+
+## デプロイ
+
+### Vercelへのデプロイ
+
+```bash
+# 本番環境へのデプロイ
+vercel --prod
+
+# プレビューデプロイ
+vercel
+```
+
+### 環境変数の設定
+
+Vercelのダッシュボードで環境変数を設定：
+
+1. プロジェクト設定 → Environment Variables
+2. `NEXT_PUBLIC_GA_ID`を追加
+3. 本番環境とプレビュー環境の両方に設定
+
+## ディレクトリ構造
 
 ```
 healtea-blog/
 ├── src/
-│   ├── app/                 # Next.js App Router
-│   │   ├── page.tsx        # 日本語トップページ
-│   │   ├── en/page.tsx     # 英語トップページ
-│   │   ├── blog/[slug]/    # ブログ記事ページ
-│   │   └── category/[category]/ # カテゴリーページ
-│   ├── components/         # Reactコンポーネント
-│   └── content/blog/       # Markdown記事
+│   ├── app/
+│   │   ├── blog/[slug]/
+│   │   ├── category/[category]/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── GoogleAnalytics.tsx
+│   │   ├── ArticleAnalytics.tsx
+│   │   └── HomeAnalytics.tsx
+│   ├── content/blog/
+│   │   ├── about-japanesetea/
+│   │   ├── health/
+│   │   ├── japanesefood/
+│   │   ├── omotenasi/
+│   │   └── travelers/
+│   ├── hooks/
+│   │   └── useAnalytics.ts
+│   └── lib/
+│       └── gtag.ts
 ├── public/
-│   └── images/            # 画像ファイル
+├── .env.local
 └── package.json
 ```
 
-## 🛠 開発
+## ライセンス
 
-```bash
-# 依存関係のインストール
-npm install
-
-# 開発サーバーの起動
-npm run dev
-
-# ビルド
-npm run build
-
-# 本番サーバーの起動
-npm start
-```
-
-## 🌐 多言語対応
-
-- `/` - 日本語版
-- `/en` - 英語版
-- 今後追加予定：韓国語、中国語（繁体字・簡体字）
-
-## 📝 記事の追加
-
-1. `src/content/blog/`にMarkdownファイルを追加
-2. フロントマターに必要なメタデータを記述
-3. 画像は`public/images/`に配置
-
-## 🔧 技術スタック
-
-- **フレームワーク**: Next.js 15.4.4
-- **言語**: TypeScript
-- **スタイリング**: Tailwind CSS
-- **コンテンツ**: Markdown + gray-matter
-- **デプロイ**: Vercel（推奨）
+© 2025 HealTea. All rights reserved.
