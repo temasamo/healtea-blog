@@ -76,6 +76,17 @@ export default async function Home({
   // 記事は常に日本語記事を表示（英語記事は少ないため）
   const displayPosts = posts.filter(post => post.lang !== 'en');
 
+  // デバッグ情報を追加
+  console.log('=== 記事一覧デバッグ ===');
+  console.log('総記事数:', posts.length);
+  console.log('表示記事数:', displayPosts.length);
+  console.log('表示される記事:', displayPosts.map(post => ({
+    slug: post.slug,
+    title: post.title,
+    date: post.date,
+    categories: post.categories
+  })));
+
   // 記事のタイトルと説明文の多言語翻訳データ
   const postTranslations: { [key: string]: { [key: string]: { title: string; description: string } } } = {
     'about-japanesetea/2025-07-29-nihoncha-history': {
@@ -364,6 +375,16 @@ export default async function Home({
     '革新': { en: 'Innovation', ko: '혁신', tw: '革新', hk: '革新' }
   };
 
+  // カテゴリの多言語翻訳データ
+  const categoryTranslations: { [key: string]: { [key: string]: string } } = {
+    '日本茶': { en: 'Japanese Tea', ko: '일본차', tw: '日本茶', hk: '日本茶' },
+    '日本の食べ物': { en: 'Japanese Food', ko: '일본 음식', tw: '日本料理', hk: '日本料理' },
+    '健康関連': { en: 'Health & Wellness', ko: '건강 관련', tw: '健康相關', hk: '健康相關' },
+    'おもてなし': { en: 'Omotenashi', ko: '오모테나시', tw: '款待', hk: '款待' },
+    '日本の農業': { en: 'Japanese Agriculture', ko: '일본 농업', tw: '日本農業', hk: '日本農業' },
+    '日本への旅行者へ': { en: 'For Travelers', ko: '여행자를 위해', tw: '給旅行者', hk: '給旅行者' }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fafafa] via-[#f8f6f3] to-[#f5f2ed] text-[#2c2c2c]">
       <HomeAnalytics currentLang={currentLang} />
@@ -502,6 +523,18 @@ export default async function Home({
                   <div>
                     <div className="mb-4 text-xs text-[#9ca3af] flex items-center gap-2 flex-wrap">
                       <span>{post.date}</span>
+                      {post.categories && Array.isArray(post.categories) && post.categories.length > 0 && (
+                        <>
+                          <span>・</span>
+                          {post.categories.map((category: string) => (
+                            <span key={category} className="bg-green-600 text-white rounded-full px-3 py-1 text-xs mr-1">
+                              {currentLang !== 'ja' && categoryTranslations[category]?.[currentLang] 
+                                ? categoryTranslations[category][currentLang] 
+                                : category}
+                            </span>
+                          ))}
+                        </>
+                      )}
                       {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
                         <>
                           <span>・</span>
@@ -552,8 +585,8 @@ export default async function Home({
           </h2>
           <div className={`grid gap-6 ${
             currentLang === 'en' 
-              ? 'grid-cols-2 lg:grid-cols-5' 
-              : 'grid-cols-2 lg:grid-cols-4'
+              ? 'grid-cols-2 lg:grid-cols-6' 
+              : 'grid-cols-2 lg:grid-cols-5'
           }`}>
             <Link href={currentLang !== 'ja' ? `/category/japanese-tea?lang=${currentLang}` : "/category/japanese-tea"} className="block">
               <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
@@ -589,6 +622,15 @@ export default async function Home({
                  currentLang === 'tw' ? '款待' :
                  currentLang === 'hk' ? '款待' :
                  'おもてなし'}
+              </span>
+            </Link>
+            <Link href={currentLang !== 'ja' ? `/category/japanese-agriculture?lang=${currentLang}` : "/category/japanese-agriculture"} className="block">
+              <span className="teaver-card px-8 py-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-[#2c2c2c] font-medium text-lg text-center block teaver-heading">
+                {currentLang === 'en' ? 'Japanese Agriculture' :
+                 currentLang === 'ko' ? '일본 농업' :
+                 currentLang === 'tw' ? '日本農業' :
+                 currentLang === 'hk' ? '日本農業' :
+                 '日本の農業'}
               </span>
             </Link>
             {currentLang === 'en' && (

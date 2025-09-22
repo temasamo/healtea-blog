@@ -17,6 +17,7 @@ const categorySlugMap: { [key: string]: string } = {
   'japanese-food': '日本の食べ物',
   'health': '健康関連',
   'omotenashi': 'おもてなし',
+  'japanese-agriculture': '日本の農業',
   'travelers': '日本への旅行者へ'
 };
 
@@ -25,6 +26,7 @@ const categoryNameMap: { [key: string]: string } = {
   '日本の食べ物': 'japanese-food',
   '健康関連': 'health',
   'おもてなし': 'omotenashi',
+  '日本の農業': 'japanese-agriculture',
   '日本への旅行者へ': 'travelers'
 };
 
@@ -456,6 +458,16 @@ export default async function CategoryPage({
     'culture': { en: 'Culture', ko: '문화', tw: '文化', hk: '文化' }
   };
 
+  // カテゴリの多言語翻訳データ
+  const categoryTranslations: { [key: string]: { [key: string]: string } } = {
+    '日本茶': { en: 'Japanese Tea', ko: '일본차', tw: '日本茶', hk: '日本茶' },
+    '日本の食べ物': { en: 'Japanese Food', ko: '일본 음식', tw: '日本料理', hk: '日本料理' },
+    '健康関連': { en: 'Health & Wellness', ko: '건강 관련', tw: '健康相關', hk: '健康相關' },
+    'おもてなし': { en: 'Omotenashi', ko: '오모테나시', tw: '款待', hk: '款待' },
+    '日本の農業': { en: 'Japanese Agriculture', ko: '일본 농업', tw: '日本農業', hk: '日本農業' },
+    '日本への旅行者へ': { en: 'For Travelers', ko: '여행자를 위해', tw: '給旅行者', hk: '給旅行者' }
+  };
+
   try {
     const { category: categorySlug } = await params;
     console.log('Category slug:', categorySlug);
@@ -534,6 +546,13 @@ export default async function CategoryPage({
                       : post.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
+                    {post.categories && Array.isArray(post.categories) && post.categories.map((category: string) => (
+                      <span key={category} className="bg-green-600 text-white text-xs px-3 py-1 rounded-full">
+                        {currentLang !== 'ja' && categoryTranslations[category]?.[currentLang] 
+                          ? categoryTranslations[category][currentLang] 
+                          : category}
+                      </span>
+                    ))}
                     {post.tags && Array.isArray(post.tags) && post.tags.map((tag: string) => (
                       <span key={tag} className="bg-[#f3f4f6] text-[#6b7280] text-xs px-3 py-1 rounded-full">
                         {currentLang !== 'ja' && tagTranslations[tag]?.[currentLang] 

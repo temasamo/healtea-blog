@@ -112,6 +112,14 @@ export default function KoreanHome() {
                   <div>
                     <div className="mb-4 text-xs text-[#9ca3af] flex items-center gap-2 flex-wrap">
                       <span>{post.date}</span>
+                      {post.categories && Array.isArray(post.categories) && post.categories.length > 0 && (
+                        <>
+                          <span>・</span>
+                          {post.categories.map((category: string) => (
+                            <span key={category} className="bg-green-600 text-white rounded-full px-3 py-1 text-xs mr-1">{category}</span>
+                          ))}
+                        </>
+                      )}
                       {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
                         <>
                           <span>・</span>

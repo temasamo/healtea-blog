@@ -14,27 +14,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HealTea - 自然の力をお茶で届ける",
-  description: "HealTeaは、厳選された有機茶葉を使用し、あなたの健康と心の安らぎをサポートします。伝統的な製法と現代の技術を融合させた、最高品質のお茶をお届けします。",
-  keywords: "お茶, 緑茶, ハーブティー, デトックス, 健康, 美容, 有機茶葉",
+  title: "HealTea Blog - 日本茶と文化の知恵を共有",
+  description: "日本茶の歴史、健康効果、おもてなし文化、日本農業など、日本茶に関する豊富な知識と文化をブログ形式でお届けします。",
+  keywords: "日本茶, 緑茶, 茶道, おもてなし, 日本文化, 健康, ブログ",
   authors: [{ name: "HealTea" }],
   openGraph: {
-    title: "HealTea - 自然の力をお茶で届ける",
-    description: "厳選された有機茶葉を使用した、健康と美容をサポートするお茶ブランド",
+    title: "HealTea Blog - 日本茶と文化の知恵を共有",
+    description: "日本茶の歴史、健康効果、おもてなし文化、日本農業など、日本茶に関する豊富な知識と文化をブログ形式でお届けします。",
     type: "website",
     locale: "ja_JP",
     alternateLocale: "en_US",
+    images: [
+      {
+        url: "https://reset-tea.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "HealTea Blog - Japanese Tea Culture and Wisdom",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HealTea - 自然の力をお茶で届ける",
-    description: "厳選された有機茶葉を使用した、健康と美容をサポートするお茶ブランド",
+    title: "HealTea Blog - 日本茶と文化の知恵を共有",
+    description: "日本茶の歴史、健康効果、おもてなし文化、日本農業など、日本茶に関する豊富な知識と文化をブログ形式でお届けします。",
   },
   alternates: {
-    canonical: "https://healtea.com",
+    canonical: "https://reset-tea.com",
     languages: {
-      "ja": "https://healtea.com",
-      "en": "https://healtea.com/en",
+      "ja": "https://reset-tea.com",
+      "en": "https://reset-tea.com/en",
+      "ko": "https://reset-tea.com/ko",
+      "zh-TW": "https://reset-tea.com/tw",
+      "zh-HK": "https://reset-tea.com/hk",
     },
   },
 };
@@ -47,9 +58,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <link rel="alternate" hrefLang="ja" href="https://healtea.com" />
-        <link rel="alternate" hrefLang="en" href="https://healtea.com/en" />
-        <link rel="alternate" hrefLang="x-default" href="https://healtea.com" />
+        <link rel="alternate" hrefLang="ja" href="https://reset-tea.com" />
+        <link rel="alternate" hrefLang="en" href="https://reset-tea.com/en" />
+        <link rel="alternate" hrefLang="ko" href="https://reset-tea.com/ko" />
+        <link rel="alternate" hrefLang="zh-TW" href="https://reset-tea.com/tw" />
+        <link rel="alternate" hrefLang="zh-HK" href="https://reset-tea.com/hk" />
+        <link rel="alternate" hrefLang="x-default" href="https://reset-tea.com" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <GoogleAnalytics />
