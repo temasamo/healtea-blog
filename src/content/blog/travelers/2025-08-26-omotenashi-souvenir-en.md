@@ -2,10 +2,11 @@
 title: "Souvenirs and Omotenashi: Gifts that Carry the Spirit of Japan"
 date: "2025-08-26"
 description: "In Japan, souvenirs are not just keepsakes but extensions of omotenashi. Discover the meaning behind souvenirs at ryokan and tourist spots, and what makes them popular with international visitors."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Omotenashi", "Souvenir", "Tourism", "Japanese Culture"]
 author: HealTea
 image: "/blog/omotenashi-souvenir.jpg"
+lang: "en"
 ---
 
 ## Introduction

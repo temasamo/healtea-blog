@@ -2,7 +2,7 @@
 title: "Onsen Legends and Festivals: Stories that Shape Japanese Hospitality"
 date: "2025-08-14"
 description: "Discover the legends and festivals tied to Japan’s onsen towns. These stories bring history and culture to life, making your trip even more memorable."
-categories: ["Travelers"]
+categories: ["travelers"]
 tags: ["Onsen", "Omotenashi", "Japanese Culture", "Festivals", "Legends"]
 author: HealTea
 lang: "en"

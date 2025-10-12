@@ -2,7 +2,7 @@
 title: "A Day at a Ryokan: Omotenashi from Check-in to Check-out"
 date: "2025-08-11"
 description: "Follow a day in a traditional Japanese ryokan from check-in to check-out, and discover the unique touches of omotenashi — with a humorous guest story included."
-categories: ["Travelers"]
+categories: ["travelers"]
 tags: ["Ryokan", "Onsen", "Omotenashi", "Japanese Culture"]
 author: HealTea
 lang: "en"

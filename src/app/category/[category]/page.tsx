@@ -18,7 +18,7 @@ const categorySlugMap: { [key: string]: string } = {
   'health': '健康関連',
   'omotenashi': 'おもてなし',
   'japanese-agriculture': '日本の農業',
-  'travelers': '日本への旅行者へ'
+  'travelers': 'travelers'
 };
 
 const categoryNameMap: { [key: string]: string } = {
@@ -27,7 +27,7 @@ const categoryNameMap: { [key: string]: string } = {
   '健康関連': 'health',
   'おもてなし': 'omotenashi',
   '日本の農業': 'japanese-agriculture',
-  '日本への旅行者へ': 'travelers'
+  'travelers': 'travelers'
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
@@ -61,7 +61,7 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
     const fullPath = path.join(dirPath, file);
     if (fs.statSync(fullPath).isDirectory()) {
       arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
-    } else if (file.endsWith('.md')) {
+    } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
       arrayOfFiles.push(fullPath);
     }
   });
@@ -69,11 +69,13 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
   return arrayOfFiles;
 }
 
-function getPostsByCategory(categoryName: string) {
+function getPostsByCategory(categoryName: string, currentLang: string) {
   try {
     console.log('Looking for posts in category:', categoryName);
+    console.log('Current language:', currentLang);
     const blogDir = path.join(process.cwd(), 'src/content/blog');
     const allFiles = getAllFiles(blogDir);
+    console.log('Total files found:', allFiles.length);
     
     const posts = allFiles
       .map((filePath) => {
@@ -82,7 +84,7 @@ function getPostsByCategory(categoryName: string) {
         
         // ファイル名からslugを生成（パスを含む）
         const relativePath = path.relative(blogDir, filePath);
-        const slug = relativePath.replace(/\.md$/, '');
+        const slug = relativePath.replace(/\.md$/, '').replace(/\.mdx$/, '');
         
         return {
           slug,
@@ -92,12 +94,14 @@ function getPostsByCategory(categoryName: string) {
           image: data.image,
           categories: data.categories || [],
           tags: data.tags || [],
+          lang: data.lang || 'ja',
         };
       })
       .filter((post) => {
         const hasCategory = post.categories.includes(categoryName);
-        console.log(`Post ${post.slug}: categories=${post.categories}, hasCategory=${hasCategory}`);
-        return hasCategory;
+        const hasCorrectLang = currentLang === 'en' ? post.lang === 'en' : post.lang !== 'en';
+        console.log(`Post ${post.slug}: categories=${post.categories}, hasCategory=${hasCategory}, lang=${post.lang}, hasCorrectLang=${hasCorrectLang}`);
+        return hasCategory && hasCorrectLang;
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
@@ -476,7 +480,7 @@ export default async function CategoryPage({
     categoryName = categorySlugMap[categorySlug] || categorySlug;
     console.log('Category name:', categoryName);
     
-    posts = getPostsByCategory(categoryName);
+    posts = getPostsByCategory(categoryName, currentLang);
   } catch (error) {
     console.error('Error in CategoryPage:', error);
     categoryName = 'カテゴリー';

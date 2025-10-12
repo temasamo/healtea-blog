@@ -57,7 +57,7 @@ function getFilePathFromSlug(slug: string): string | null {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
+  const decodedSlug = decodeURIComponent(decodeURIComponent(slug));
   const filePath = getFilePathFromSlug(decodedSlug);
   if (!filePath || !fs.existsSync(filePath)) return {};
   const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -94,7 +94,7 @@ export async function generateStaticParams() {
 }
 
 async function getPost(slug: string) {
-  const decodedSlug = decodeURIComponent(slug);
+  const decodedSlug = decodeURIComponent(decodeURIComponent(slug));
   const filePath = getFilePathFromSlug(decodedSlug);
   if (!filePath || !fs.existsSync(filePath)) return null;
   const fileContents = fs.readFileSync(filePath, 'utf8');

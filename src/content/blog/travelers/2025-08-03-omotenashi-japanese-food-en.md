@@ -2,7 +2,7 @@
 title: "Omotenashi and Japanese Food Culture: The Heart Served on a Plate"
 date: "2025-08-03"
 description: "Discover how omotenashi — Japan's unique spirit of hospitality — is expressed through exquisite ryokan cuisine, from kaiseki meals to local specialties, plus a lighthearted dinner table story."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["Ryokan", "Onsen", "Japanese Food", "Omotenashi", "Travel"]
 author: HealTea
 lang: "en"

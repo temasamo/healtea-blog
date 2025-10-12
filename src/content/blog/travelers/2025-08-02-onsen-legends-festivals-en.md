@@ -2,7 +2,7 @@
 title: "Legends and Festivals of Japan's Onsen Towns: Stories and Smiles Await"
 date: "2025-08-02"
 description: "Discover the fascinating legends and vibrant festivals of Japan's hot spring towns, plus a lighthearted onsen etiquette story to make you smile."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["Onsen", "Travel", "Omotenashi", "Legends", "Festivals"]
 author: HealTea
 lang: "en"

@@ -2,10 +2,11 @@
 title: "Hospitality Through Japanese Cuisine – A Feast for the Senses"
 date: "2025-08-15"
 description: "Exploring how Japanese cuisine embodies the spirit of hospitality and delights visitors from around the world."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Ryokan", "Onsen", "Sightseeing", "Hospitality", "Japanese Cuisine", "Inbound"]
 author: HealTea
 image: "/blog/hospitality-japanese-food.jpg"
+lang: "en"
 ---
 
 ## Introduction

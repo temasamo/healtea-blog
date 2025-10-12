@@ -2,10 +2,11 @@
 title: "Festivals and Omotenashi – Experiencing the Heart of Japanese Culture"
 date: "2025-08-21"
 description: "Japanese festivals embody both local pride and the spirit of omotenashi. From Gion Matsuri to Nebuta Matsuri, discover how visitors are warmly welcomed through these cultural celebrations."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Tourism", "Festival", "Omotenashi", "Inbound"]
 author: HealTea
 image: "/blog/festival-omotenashi.jpg"
+lang: "en"
 ---
 
 ## Introduction

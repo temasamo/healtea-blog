@@ -2,10 +2,11 @@
 title: "Seasons and Omotenashi: Japan’s Hospitality in Harmony with Nature"
 date: "2025-08-24"
 description: "Omotenashi in Japan is deeply connected to the seasons. From spring cherry blossoms to summer coolness, autumn colors, and winter warmth, discover how hospitality reflects nature’s rhythm."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Omotenashi", "Seasons", "Tourism", "Japanese Culture"]
 author: HealTea
 image: "/blog/omotenashi-seasons.jpg"
+lang: "en"
 ---
 
 ## Introduction

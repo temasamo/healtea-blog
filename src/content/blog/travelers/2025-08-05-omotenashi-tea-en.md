@@ -2,7 +2,7 @@
 title: "Tea and Omotenashi: Hospitality in a Cup"
 date: "2025-08-05"
 description: "In Japanese ryokan and onsen towns, a simple cup of tea is more than a drink — it’s the first step of heartfelt omotenashi. Discover its cultural meaning and enjoy a lighthearted tea-time story."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["Tea", "Ryokan", "Onsen", "Omotenashi", "Japanese Culture"]
 author: HealTea
 lang: "en"

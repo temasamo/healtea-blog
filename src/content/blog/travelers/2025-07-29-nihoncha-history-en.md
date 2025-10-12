@@ -2,7 +2,7 @@
 title: "History of Japanese Tea: Where Did Tea Come From?"
 date: "2025-07-29"
 description: "An easy-to-understand introduction to the history of Japanese tea from the Heian period to modern times. We trace the footsteps of figures like Saicho and Sen no Rikyu who shaped Japanese culture."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["japanese tea", "history", "tea ceremony", "culture"]
 author: HealTea
 # image: "/blog/nihoncha-history.jpg"

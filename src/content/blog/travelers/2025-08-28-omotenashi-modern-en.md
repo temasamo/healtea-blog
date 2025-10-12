@@ -2,10 +2,11 @@
 title: "Modern Omotenashi: Blending Tradition with Technology"
 date: "2025-08-31"
 description: "Traditional Japanese omotenashi is evolving with AI, multilingual support, and smart ryokan systems. Explore examples of modern hospitality and its future possibilities."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Omotenashi", "Technology", "AI", "Ryokan", "Tourism"]
 author: HealTea
 image: "/blog/omotenashi-modern.jpg"
+lang: "en"
 ---
 
 ## Introduction

@@ -2,10 +2,11 @@
 title: "The Spirit of Omotenashi in the Way of Tea"
 date: "2025-08-19"
 description: "Exploring how Japanese tea ceremony embodies the essence of omotenashi through simplicity, harmony, and mindfulness."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["tea ceremony", "matcha", "hospitality", "Japanese culture"]
 author: HealTea
 image: "/blog/tea-ceremony-omotenashi.jpg"
+lang: "en"
 ---
 
 ## The Tea Room as a Space of Hospitality

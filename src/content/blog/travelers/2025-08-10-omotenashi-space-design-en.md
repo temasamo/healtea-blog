@@ -2,7 +2,7 @@
 title: "Omotenashi in Space Design: The Aesthetics of Japanese Ryokan"
 date: "2025-08-10"
 description: "From architecture to aroma, discover how ryokan and onsen towns create immersive spaces that embody the spirit of omotenashi — plus a lighthearted guest story."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["Ryokan", "Onsen", "Omotenashi", "Space Design", "Japanese Culture"]
 author: HealTea
 lang: "en"

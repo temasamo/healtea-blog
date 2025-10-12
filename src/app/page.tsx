@@ -29,7 +29,7 @@ export default async function Home({
       const fullPath = path.join(dirPath, file);
       if (fs.statSync(fullPath).isDirectory()) {
         arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
-      } else if (file.endsWith('.md')) {
+      } else if (file.endsWith('.md') || file.endsWith('.mdx')) {
         arrayOfFiles.push(fullPath);
       }
     });
@@ -46,7 +46,7 @@ export default async function Home({
     
     // ファイル名からslugを生成（パスを含む）
     const relativePath = path.relative(blogDir, filePath);
-    const slug = relativePath.replace(/\.md$/, '');
+    const slug = relativePath.replace(/\.md$/, '').replace(/\.mdx$/, '');
     
     // tagsを配列として確実に処理
     let tags = data.tags || [];
@@ -73,8 +73,15 @@ export default async function Home({
   
   console.log('Language parameter:', langParam, 'Current lang:', currentLang);
   
-  // 記事は常に日本語記事を表示（英語記事は少ないため）
-  const displayPosts = posts.filter(post => post.lang !== 'en');
+  // 記事を言語別に表示
+  const displayPosts = posts.filter(post => {
+    // 英語記事は英語ページで表示
+    if (currentLang === 'en') {
+      return post.lang === 'en';
+    }
+    // その他の言語は日本語記事を表示
+    return post.lang !== 'en';
+  });
 
   // デバッグ情報を追加
   console.log('=== 記事一覧デバッグ ===');

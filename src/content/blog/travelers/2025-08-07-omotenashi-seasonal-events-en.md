@@ -2,7 +2,7 @@
 title: "Seasonal Hospitality in Japan: Omotenashi Through the Four Seasons"
 date: "2025-08-07"
 description: "In Japanese ryokan and onsen towns, each season brings unique touches of hospitality — from cherry blossoms to snow-viewing baths. Explore how Japan’s omotenashi spirit flows with the seasons."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["Ryokan", "Onsen", "Omotenashi", "Seasonal Events", "Japanese Culture"]
 author: HealTea
 lang: "en"

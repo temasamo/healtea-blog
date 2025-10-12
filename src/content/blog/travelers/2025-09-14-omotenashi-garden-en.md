@@ -2,10 +2,11 @@
 title: "Gardens and Omotenashi: Hospitality in Tranquil Spaces"
 date: "2025-09-14"
 description: "Japanese gardens are not only scenic landscapes but also expressions of hospitality. Through their connection with ryokan and tea houses, they reflect the essence of omotenashi."
-categories: ["Omotenashi"]
+categories: ["travelers"]
 tags: ["Omotenashi", "Japanese Garden", "Ryokan", "Tourism"]
 author: HealTea
 image: "/blog/2025-09-14-omotenashi-garden.jpg"
+lang: "en"
 ---
 
 ![Gardens and Omotenashi](/blog/2025-09-14-omotenashi-garden.jpg)

@@ -2,7 +2,7 @@
 title: "Onsen Legends and Festival Culture: Japanese Stories That Fascinate Foreigners"
 date: "2025-07-31"
 description: "Introducing the mystical legends of hot spring areas across Japan and the festival culture nurtured alongside hot springs for foreign tourists."
-categories: ["日本への旅行者へ"]
+categories: ["travelers"]
 tags: ["onsen", "tourism", "omotenashi", "legends", "festivals"]
 author: HealTea
 image: "/blog/onsen-legends-festivals.jpg"
