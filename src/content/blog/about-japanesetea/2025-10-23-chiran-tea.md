@@ -6,7 +6,6 @@ categories: ["日本茶"]
 tags: ["日本茶", "知覧茶", "鹿児島", "煎茶", "九州茶"]
 author: HealTea
 lang: "ja"
-image: "/blog/2025-10-23-chiran-tea.jpg"
 ---
 
 ![朝日を浴びる知覧の茶畑](/blog/2025-10-23-chiran-tea.jpg)
