@@ -509,7 +509,7 @@ export default async function CategoryPage({
           </Link>
         </div>
         
-        <h1 className="text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-center mb-16 tracking-[0.15em] teaver-heading">
           {categoryName === '日本への旅行者へ' && currentLang === 'en' ? 'For Travelers to Japan' :
            categoryName === '日本への旅行者へ' && currentLang === 'ko' ? '일본 여행자를 위해' :
            categoryName === '日本への旅行者へ' && currentLang === 'tw' ? '給日本旅行者' :

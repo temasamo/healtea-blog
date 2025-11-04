@@ -449,7 +449,7 @@ export default async function Home({
       <main className="max-w-7xl mx-auto px-6 py-16">
         {/* Hero Section */}
         <section className="mb-20 text-center">
-          <h1 className="text-5xl sm:text-6xl font-light mb-8 tracking-[0.15em] font-sans">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light mb-8 tracking-[0.15em] font-sans">
             {currentLang === 'en' ? (
               <>
                 Tea & Health<br />
